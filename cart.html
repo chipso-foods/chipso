@@ -314,10 +314,14 @@ function loadCart(){
 }
 
 function updateQty(index, change) {
-    if (cart[index].qty + change > 0) {
-        cart[index].qty += change;
-        saveAndReload();
+    // 5-ൽ താഴെ ആകാൻ ശ്രമിച്ചാൽ തടയുന്നു (മിനിമം ക്വാണ്ടിറ്റി 5 ആയിരിക്കും)
+    if (cart[index].qty + change < 5) {
+        alert("Minimum quantity is 5!");
+        return;
     }
+    
+    cart[index].qty += change;
+    saveAndReload();
 }
 
 function removeItem(index){
