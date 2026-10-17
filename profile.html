@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Chipso Foods</title>
+    <link rel="icon" type="image/jpeg" href="logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Outfit:wght@300;400;600;800&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #fffdfa;
+            --primary-orange: #ea580c;
+            --dark-heading: #0f172a;
+            --slate-card: #1c2541;
+            --cyan-accent: #38bdf8;
+        }
+
+        body {
+            font-family: 'Outfit', 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 20px;
+            color: var(--dark-heading);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 95vh;
+        }
+
+        .profile-card {
+            background: #ffffff;
+            border: 2px solid rgba(249, 115, 22, 0.25);
+            border-radius: 24px;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+
+        .avatar-container {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 15px auto;
+            border-radius: 50%;
+            background: #fff7ed;
+            border: 3px solid var(--primary-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 5px 0;
+        }
+
+        .user-email {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .menu-btn {
+            background: #fff7ed;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            padding: 14px 18px;
+            border-radius: 14px;
+            text-decoration: none;
+            color: var(--dark-heading);
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .menu-btn:hover {
+            background: #ffedd5;
+            border-color: var(--primary-orange);
+            color: var(--primary-orange);
+        }
+
+        /* --- ORDERS INLINE DISPLAY SECTION --- */
+        .orders-container {
+            display: none;
+            margin-top: 15px;
+            text-align: left;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .orders-container::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .orders-container::-webkit-scrollbar-thumb {
+            background: var(--primary-orange);
+            border-radius: 10px;
+        }
+
+        .order-card {
+            background: #fff7ed;
+            border: 1px solid rgba(249, 115, 22, 0.25);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 12px;
+            font-size: 0.88rem;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed rgba(249, 115, 22, 0.3);
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+        }
+
+        .order-id {
+            font-weight: 800;
+            color: var(--primary-orange);
+        }
+
+        .order-date {
+            font-size: 0.78rem;
+            color: #64748b;
+        }
+
+        .order-products {
+            color: #334155;
+            white-space: pre-line;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            padding-top: 4px;
+        }
+
+        .order-status {
+            background: #dcfce7;
+            color: #15803d;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+
+        .no-orders {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+            padding: 15px;
+        }
+
+        .auth-action-btn {
+            background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 50px;
+            width: 100%;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.25);
+            margin-top: 10px;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 15px;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .back-home:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <div class="avatar-container">
+            <svg id="defaultGuestIcon" width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <img id="userAvatarImg" src="" alt="Profile" style="display:none;">
+        </div>
+
+        <h2 class="user-name" id="userNameText">Guest User</h2>
+        <div class="user-email" id="userEmailText">Not logged in</div>
+
+        <div class="menu-list">
+            <div class="menu-btn" onclick="toggleOrdersList()">
+                <span>📦 My Orders</span>
+                <span id="arrowIcon">▼</span>
+            </div>
+
+            <!-- Inlined Orders Section -->
+            <div class="orders-container" id="ordersContainer">
+                <!-- Orders will load dynamically -->
+            </div>
+        </div>
+
+        <button class="auth-action-btn" id="authBtn" onclick="handleProfileAuth()">Login with Google</button>
+
+        <br>
+        <a href="m.html" class="back-home">← Back to Home Page</a>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            let loggedUser = localStorage.getItem("googleUserSignedIn");
+            if (loggedUser) {
+                let user = JSON.parse(loggedUser);
+                document.getElementById('userNameText').innerText = user.name;
+                document.getElementById('userEmailText').innerText = user.email;
+                
+                const avatarImg = document.getElementById('userAvatarImg');
+                avatarImg.src = user.avatar || "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.name);
+                avatarImg.style.display = 'block';
+                document.getElementById('defaultGuestIcon').style.display = 'none';
+
+                document.getElementById('authBtn').innerText = "🚪 Logout";
+                document.getElementById('authBtn').style.background = "#dc2626";
+            }
+            loadUserOrders();
+        });
+
+        function toggleOrdersList() {
+            const container = document.getElementById('ordersContainer');
+            const arrow = document.getElementById('arrowIcon');
+            if (container.style.display === 'block') {
+                container.style.display = 'none';
+                arrow.innerText = '▼';
+            } else {
+                container.style.display = 'block';
+                arrow.innerText = '▲';
+            }
+        }
+
+        function loadUserOrders() {
+            const container = document.getElementById('ordersContainer');
+            let orders = JSON.parse(localStorage.getItem("myOrders")) || [];
+
+            if (orders.length === 0) {
+                container.innerHTML = `<div class="no-orders">📦 No recent orders found!</div>`;
+                return;
+            }
+
+            let html = '';
+            orders.forEach(ord => {
+                html += `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <span class="order-id">${ord.orderId || 'CHIPSO-ORDER'}</span>
+                            <span class="order-date">${ord.date || ''}</span>
+                        </div>
+                        <div class="order-products">${ord.products}</div>
+                        <div class="order-footer">
+                            <span>Total: ₹${ord.total}</span>
+                            <span class="order-status">${ord.status || 'Confirmed'}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function handleProfileAuth() {
+            let loggedUser = localStorage.getItem("googleUserSignedIn");
+            if (loggedUser) {
+                localStorage.removeItem("googleUserSignedIn");
+                alert("Logged out successfully!");
+                window.location.reload();
+            } else {
+                window.location.href = "m.html";
+            }
+        }
+    </script>
+</body>
+</html>
