@@ -378,7 +378,27 @@ form.addEventListener("submit", e => {
   btn.innerText = "Processing...";
 
   let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
+  let address = document.getElementById("address").value;
   let products = document.getElementById("productList").value;
+  let total = document.getElementById("totalDisplay").value;
+
+  // Order details save cheyyanulla object
+  let newOrder = {
+      orderId: "CHIPSO-" + Math.floor(100000 + Math.random() * 900000),
+      date: new Date().toLocaleDateString('en-GB'),
+      name: name,
+      phone: phone,
+      address: address,
+      products: products,
+      total: total,
+      status: "Order Confirmed"
+  };
+
+  // LocalStorage-ile 'myOrders' array-ilottu order save cheyyunnu
+  let existingOrders = JSON.parse(localStorage.getItem("myOrders")) || [];
+  existingOrders.unshift(newOrder); // New order aadyam varan
+  localStorage.setItem("myOrders", JSON.stringify(existingOrders));
 
   let ownerWhatsAppNumber = "9744390615";
 
@@ -391,8 +411,8 @@ form.addEventListener("submit", e => {
           localStorage.removeItem("fullOrderSummary");
           localStorage.removeItem("totalOrderAmount");
 
-          let message = `\n\n*Name:* ${name}\n*Products:* ${products}`;
-          let whatsappUrl = `https://wa.me/${9744390615}?text=${encodeURIComponent(message)}`;
+          let message = `*New Order Placed!*\n\n*Name:* ${name}\n*Products:* ${products}\n*Total:* ₹${total}`;
+          let whatsappUrl = `https://wa.me/${ownerWhatsAppNumber}?text=${encodeURIComponent(message)}`;
 
           window.open(whatsappUrl, '_blank');
 
