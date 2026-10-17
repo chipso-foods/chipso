@@ -27,7 +27,7 @@
     --dark-heading: #1e293b;
     --accent-red: #ef4444;
     
-    /* Dark Slate Blue Theme (Same as Nav & Contact) */
+    /* Dark Slate Blue Theme */
     --nav-contact-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
     
     --btn-gradient: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
@@ -74,81 +74,87 @@ body::after {
     border-radius: 50%;
 }
 
-/* --- DARK SLATE HEADER (MATCHED WITH NAV & CONTACT) --- */
+/* --- HEADER --- */
 header { 
     background: var(--nav-contact-bg);
     border-bottom: 3px solid var(--primary-orange);
-    padding: 25px 30px; 
+    padding: 18px 20px; 
     text-align: center; 
-    font-size: 24px; 
+    font-size: 1.3rem; 
     font-weight: 800; 
     letter-spacing: 0.5px;
     position: relative;
     color: #ffffff;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .back-btn {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
     background: rgba(255, 255, 255, 0.12);
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 10px 22px;
+    padding: 8px 14px;
     border-radius: 50px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .back-btn:hover { 
     background: var(--primary-orange); 
     color: white; 
-    transform: translateX(-3px);
     border-color: transparent;
 }
-.back-btn:active { transform: scale(0.95); }
 
 h2 { 
     text-align: center; 
-    margin-top: 50px; 
-    font-size: 2rem;
+    margin-top: 30px; 
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--dark-heading); 
 }
 
-/* Premium Light Floating Table Container */
+/* Table Container (Responsive Scroll Enabled) */
 .table-container { 
-    width:92%; 
-    max-width:950px; 
-    margin:30px auto; 
+    width: 94%; 
+    max-width: 950px; 
+    margin: 20px auto; 
     background: var(--card-bg); 
-    border-radius: 20px; 
+    border-radius: 18px; 
     box-shadow: 0 10px 30px rgba(245, 158, 11, 0.08); 
-    overflow: hidden; 
+    overflow-x: auto; 
     border: 1px solid var(--card-border);
+    -webkit-overflow-scrolling: touch;
 }
 
-table { width:100%; border-collapse:collapse; min-width: 500px; }
-th, td { padding: 18px 20px; text-align:center; border-bottom:1px solid var(--card-border); }
+table { width: 100%; border-collapse: collapse; min-width: 420px; }
+th, td { padding: 14px 12px; text-align: center; border-bottom: 1px solid var(--card-border); }
 
-/* --- THEAD DARK SLATE BLUE THEME --- */
+/* --- TH DARK SLATE BLUE THEME --- */
 th { 
     background: var(--nav-contact-bg); 
     font-weight: 700; 
     color: #ffffff; 
     text-transform: uppercase; 
-    font-size: 0.85rem; 
+    font-size: 0.8rem; 
     letter-spacing: 0.8px;
     border-bottom: 2px solid var(--primary-orange);
 }
 
-.product-cell { display: flex; align-items: center; gap: 16px; text-align: left; }
-.cart-img { width: 55px; height: 55px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
-.product-cell span { font-weight: 600; color: var(--dark-heading); }
+.product-cell { display: flex; align-items: center; gap: 10px; text-align: left; }
+.cart-img { width: 45px; height: 45px; object-fit: cover; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,0.06); }
+.product-cell span { font-weight: 600; color: var(--dark-heading); font-size: 0.9rem; }
 
 /* Light Quantity Controls */
 .qty-controls-wrapper {
@@ -156,7 +162,7 @@ th {
     align-items: center;
     justify-content: center;
     background: #fff7ed;
-    padding: 6px 12px;
+    padding: 4px 8px;
     border-radius: 50px;
     width: fit-content;
     margin: 0 auto;
@@ -166,8 +172,8 @@ th {
 .qty-btn { 
     background: #ffffff; 
     border: 1px solid rgba(249, 115, 22, 0.3); 
-    width: 28px; 
-    height: 28px; 
+    width: 26px; 
+    height: 26px; 
     cursor: pointer; 
     border-radius: 50%; 
     font-weight: bold; 
@@ -178,25 +184,28 @@ th {
     transition: all 0.2s ease;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
+
 .qty-btn:hover { background: var(--primary-orange); color: white; border-color: var(--primary-orange); }
-.qty-val { margin: 0 12px; font-weight: 700; font-size: 1rem; color: var(--dark-heading); }
+.qty-val { margin: 0 8px; font-weight: 700; font-size: 0.9rem; color: var(--dark-heading); }
 
 .remove-btn { 
     background: #fef2f2; 
     color: var(--accent-red); 
     border: 1px solid #fecaca; 
-    padding: 8px 14px; 
+    padding: 6px 10px; 
     border-radius: 50px; 
     cursor: pointer; 
     font-weight: 600;
+    font-size: 0.8rem;
     transition: all 0.2s ease;
 }
+
 .remove-btn:hover { background: var(--accent-red); color: #fff; border-color: var(--accent-red); }
 
 .total-section { 
     text-align: center; 
-    font-size: 28px; 
-    margin: 40px 20px 20px 20px; 
+    font-size: 24px; 
+    margin: 30px 20px 15px 20px; 
     font-weight: 800; 
     color: var(--primary-orange); 
 }
@@ -204,53 +213,95 @@ th {
 /* Premium Gradient Button */
 .btn { 
     display: block; 
-    margin: 20px auto 60px; 
-    padding: 18px 60px; 
+    margin: 20px auto 40px; 
+    padding: 16px 40px; 
     background: var(--btn-gradient); 
     color: #fff;
     border: none; 
     border-radius: 50px; 
     cursor: pointer; 
     font-weight: 800; 
-    font-size: 1.2rem; 
+    font-size: 1.1rem; 
     text-transform: uppercase;
     letter-spacing: 0.8px;
     box-shadow: var(--glow-shadow);
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+    width: 88%;
+    max-width: 360px;
 }
+
 .btn:hover { 
     background: var(--btn-hover); 
-    transform: translateY(-4px); 
+    transform: translateY(-3px); 
     box-shadow: 0 15px 35px rgba(234, 88, 12, 0.45);
 }
 
-/* Responsive spacing optimizations */
-@media (max-width: 768px) {
-    header { padding: 25px; font-size: 22px; }
-    .back-btn { position: static; display: inline-block; margin: 0 0 15px 0; padding: 8px 18px; }
-    h2 { margin-top: 25px; font-size: 1.6rem; }
-}
-
 @media (max-width: 600px) { 
-    header { font-size: 20px; padding: 20px; } 
-    .table-container { width: 95%; margin: 15px auto; border-radius: 14px; }
-    th, td { padding: 12px 10px; font-size: 0.9rem; }
-    .cart-img { width: 42px; height: 42px; border-radius: 8px; }
-    .product-cell { gap: 10px; }
-    .qty-controls-wrapper { padding: 4px 8px; }
-    .qty-btn { width: 24px; height: 24px; font-size: 0.8rem; }
-    .qty-val { margin: 0 8px; font-size: 0.9rem; }
-    .remove-btn { padding: 6px 10px; font-size: 0.8rem; }
-    .total-section { font-size: 22px; margin-top: 30px; }
-    .btn { width: 90%; padding: 15px 20px; font-size: 1.05rem; }
+    header { 
+        font-size: 1.1rem; 
+        padding: 16px 10px; 
+        justify-content: flex-end; 
+        padding-right: 20px;
+    } 
+    .back-btn {
+        left: 10px;
+        padding: 6px 14px;
+        font-size: 0.85rem;
+    }
+    .table-container { 
+        width: 98%; 
+        margin: 15px auto; 
+    }
+    
+    /* Table Header & Cell Padding / Font Size Kootiyiyath */
+    th, td { 
+        padding: 14px 10px; 
+        font-size: 0.95rem; 
+    }
+    th {
+        font-size: 0.88rem;
+    }
+
+    /* Product Image & Text Size Adjustment */
+    .cart-img { 
+        width: 52px; 
+        height: 52px; 
+        border-radius: 10px;
+    }
+    .product-cell span { 
+        font-size: 0.95rem; 
+        font-weight: 700;
+    }
+
+    /* Quantity Controls Size Adjustment */
+    .qty-controls-wrapper {
+        padding: 6px 10px;
+    }
+    .qty-btn { 
+        width: 30px; 
+        height: 30px; 
+        font-size: 1rem; 
+    }
+    .qty-val { 
+        margin: 0 10px; 
+        font-size: 1rem; 
+    }
+
+    /* Remove Button Size */
+    .remove-btn { 
+        padding: 8px 12px; 
+        font-size: 0.9rem; 
+    }
+
+    .total-section { font-size: 22px; }
 }
 </style>
 </head>
 <body>
 
 <header>
-    <button onclick="goBack()" class="back-btn">⬅ Back</button>
-    Chipso Snaxx Cart 🛒
+    <button onclick="goBack()" class="back-btn">← Back</button>
+    <span>Chipso Snaxx Cart 🛒</span>
 </header>
 
 <h2>Your Items</h2>
@@ -259,7 +310,7 @@ th {
 <table id="cartTable">
 <thead>
     <tr>
-    <th style="text-align: left; padding-left: 25px;">Product</th>
+    <th style="text-align: left; padding-left: 15px;">Product</th>
     <th>Price</th>
     <th>Qty</th>
     <th>Remove</th>
@@ -287,10 +338,15 @@ function loadCart(){
     }
 
     cart.forEach((item, index) => {
+        // Enforce minimum 5 packets on initial cart load
+        if (!item.qty || item.qty < 5) {
+            item.qty = 5;
+        }
+
         let row = tableBody.insertRow();
         row.innerHTML = `
         <td>
-            <div class="product-cell" style="padding-left: 10px;">
+            <div class="product-cell" style="padding-left: 5px;">
                 <img src="${item.img}" class="cart-img">
                 <span>${item.name}</span>
             </div>
@@ -310,13 +366,14 @@ function loadCart(){
         total += item.price * item.qty;
     });
 
+    localStorage.setItem("cart", JSON.stringify(cart));
     document.getElementById("grandTotal").innerText = "Total: ₹" + total;
 }
 
 function updateQty(index, change) {
-    // 5-ൽ താഴെ ആകാൻ ശ്രമിച്ചാൽ തടയുന്നു (മിനിമം ക്വാണ്ടിറ്റി 5 ആയിരിക്കും)
+    // 5-ൽ താഴെ ആകാൻ ശ്രമിച്ചാൽ തടയുന്നു (മിനിമം ക്വാണ്ടിറ്റി 5)
     if (cart[index].qty + change < 5) {
-        alert("Minimum quantity is 5!");
+        alert("Minimum order quantity is 5 packets!");
         return;
     }
     
@@ -343,7 +400,7 @@ function goToOrder(){
     }
     
     let summary = cart.map(item => {
-        let quantity = item.qty || 1;
+        let quantity = item.qty || 5;
         return `${item.name} x ${quantity}`;
     }).join(", ");
 
