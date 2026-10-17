@@ -5,14 +5,18 @@
     <meta name="google-site-verification" content="839lNAHnmsqWzQ4oZ_fe86ozV4sQ5skM2SvBcgwh84Q" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chipso Foods | Premium Quality Snacks in Kottayam</title>
-    <meta name="keywords" content="Chipso snacks, Chipso snaxx,Chipso Foods, Kerala snacks, banana chips Kerala, murukku online, snacks Kottayam, best snacks Kerala">
-    <meta name="description" content="Order fresh Kerala snacks online. Banana chips, murukku, tapioca chips and more from Chipso Foods.chipso foods">
+    <meta name="keywords" content="Chipso snacks, Chipso foods, Kerala snacks, banana chips Kerala, murukku online, snacks Kottayam, best snacks Kerala">
+    <meta name="description" content="Order fresh Kerala snacks online. Banana chips, murukku, tapioca chips and more from Chipso Foods.">
     <link rel="icon" type="image/jpeg" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Outfit:wght@300;400;600;800&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Official Google Identity Services SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     <style>
         :root {
             --bg-light: #fffdfa;
@@ -26,7 +30,6 @@
             --primary-yellow: #eab308;
             --dark-heading: #0f172a;
             
-            /* Dark Slate & Cyan Colors */
             --slate-bg: #0b132b;
             --slate-card: #1c2541;
             --cyan-accent: #38bdf8;
@@ -47,6 +50,7 @@
             line-height: 1.6;
             overflow-x: hidden;
             position: relative;
+            padding-bottom: 70px;
         }
 
         #main-content {
@@ -82,17 +86,67 @@
         /* --- HEADER --- */
         header { 
             background: linear-gradient(180deg, #fffbeb 0%, #fff7ed 100%);
-            padding: 50px 20px 40px 20px; 
+            padding: 20px 20px; 
             text-align: center;
             position: relative;
             border-bottom: 2px solid var(--card-border);
+            transition: all 0.6s ease-in-out;
+        }
+
+        .header-top-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            width: 100%;
+        }
+
+        .header-profile-container {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .header-profile-btn {
+            background: #1c2541;
+            border: 2px solid var(--primary-orange);
+            color: white;
+            padding: 0;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-decoration: none;
+            transition: transform 0.2s ease;
+            width: 42px;
+            height: 42px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .header-profile-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .header-profile-btn img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .chipso-title {
             font-family: 'Fredoka', sans-serif;
-            font-size: 6.2rem; font-weight: 700; margin: 0;
+            font-size: 3.5rem; font-weight: 700; margin: 0;
             display: flex; justify-content: center; align-items: center; line-height: 1;
             filter: drop-shadow(2px 6px 12px rgba(249, 115, 22, 0.2));
+            transition: all 0.6s ease-in-out;
         }
 
         .chipso-title span {
@@ -109,15 +163,129 @@
         .c-o { background: linear-gradient(180deg, #ff2244 0%, #d50022 100%); }
 
         header h2 {
-            margin: 10px 0; color: var(--dark-heading);
+            margin: 6px 0 10px 0; color: var(--dark-heading);
             font-size: 2.1rem; text-transform: lowercase; font-weight: 700; letter-spacing: 4px;
+            transition: all 0.4s ease;
         }
         
         header p {
             font-weight: 700; font-size: 1.25rem; color: #c2410c; max-width: 600px; margin: 0 auto;
+            transition: opacity 0.4s ease;
         }
 
-        /* --- NAV PANEL --- */
+        /* --- MODAL POPUP STYLES --- */
+        .google-signin-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .google-signin-box {
+            background: #232323;
+            color: #ffffff;
+            width: 400px;
+            max-width: 90vw;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+            padding: 32px 28px;
+            position: relative;
+            box-sizing: border-box;
+            text-align: center;
+            animation: popInModal 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes popInModal {
+            from { transform: scale(0.9) translateY(10px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 20px; right: 20px;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #999;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; font-size: 1.1rem;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 10px 0 8px 0;
+            color: #ffffff;
+        }
+
+        .modal-subtitle {
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            margin: 0 0 28px 0;
+            line-height: 1.4;
+        }
+
+        .continue-google-btn {
+            background: #2f2f2f;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 100%;
+            padding: 13px 18px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-sizing: border-box;
+        }
+
+        .continue-google-btn:hover {
+            background: #3a3a3a;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .insta-sticker-panel {
+            display: none;
+            background: linear-gradient(135deg, #fdf2e9 0%, #fae5d3 100%);
+            padding: 8px 16px;
+            margin: 14px auto 0 auto;
+            width: fit-content;
+            border-radius: 50px;
+            border: 1.5px dashed var(--primary-orange);
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.15);
+            animation: bounceSticker 2s infinite ease-in-out;
+        }
+
+        .insta-sticker-content {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #c2410c;
+        }
+
+        @keyframes bounceSticker {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
         nav { 
             display: flex; justify-content: center; align-items: center;
             background: var(--nav-contact-bg); backdrop-filter: blur(15px);
@@ -140,7 +308,6 @@
 
         nav a:hover { color: #fbbf24; background: rgba(255, 255, 255, 0.08); }
 
-        /* --- HOME HERO SECTION --- */
         .hero-section {
             text-align: center; padding: 60px 20px;
             background: linear-gradient(180deg, #fff7ed 0%, #ffedd5 100%);
@@ -161,7 +328,6 @@
             box-shadow: var(--glow-shadow); display: inline-block; text-transform: uppercase;
         }
 
-        /* --- FEATURES / HIGHLIGHTS SECTION --- */
         .features-section {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px;
             max-width: 1200px; margin: 40px auto; padding: 0 24px;
@@ -175,7 +341,6 @@
         .feature-box h4 { margin: 10px 0 5px 0; font-size: 1.2rem; color: var(--dark-heading); font-weight: 700; }
         .feature-box p { margin: 0; font-size: 0.95rem; color: #475569; font-weight: 500; }
 
-        /* --- PRODUCTS SECTION --- */
         .products { padding: 40px 24px 60px 24px; max-width: 1300px; margin: 0 auto; }
         .section-title { text-align: center; font-size: 2rem; font-weight: 800; color: var(--dark-heading); margin-bottom: 30px; text-transform: uppercase; }
         .product-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
@@ -207,13 +372,11 @@
 
         .order-btn:hover { transform: scale(1.02); }
 
-        /* MAIN BIG "PLACE YOUR ORDER" BUTTON LIKE IMAGE */
         .main-place-order-wrapper {
             text-align: center; margin: 40px 0 20px 0;
         }
 
         .main-place-order-btn {
-            background: linear-gradient(135deg, #ff8a00 0%, #e52e71 100%, #ff5400 100%);
             background: linear-gradient(90deg, #ff9100, #ff3c00);
             color: #ffffff;
             font-size: 1.2rem;
@@ -237,17 +400,8 @@
             box-shadow: 0 15px 35px rgba(255, 60, 0, 0.6);
         }
 
-        /* --- SLIDING REVIEWS --- */
-        .reviews-section { padding: 60px 20px; background: #fff7ed; border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); text-align: center; }
-        .review-slider-container { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 20px 10px; max-width: 1200px; margin: 0 auto; -webkit-overflow-scrolling: touch; }
-        .review-slider-container::-webkit-scrollbar { height: 6px; }
-        .review-slider-container::-webkit-scrollbar-thumb { background: var(--primary-orange); border-radius: 10px; }
-        .review-card { flex: 0 0 300px; scroll-snap-align: center; background: #ffffff; padding: 22px; border-radius: 20px; border: 2px solid rgba(249, 115, 22, 0.2); box-shadow: 0 4px 15px rgba(0,0,0,0.04); text-align: left; }
-        .stars { color: #f59e0b; margin-bottom: 8px; font-size: 1.1rem; }
-
-        /* --- AI CHATBOT SYSTEM --- */
         .ai-chat-btn {
-            position: fixed; bottom: 25px; right: 25px;
+            position: fixed; bottom: 80px; right: 25px;
             background: linear-gradient(135deg, #0b132b 0%, #1c2541 100%);
             color: #ffffff; border-radius: 50px; padding: 12px 22px; font-weight: 700;
             border: 1px solid var(--cyan-accent); cursor: pointer;
@@ -262,7 +416,7 @@
         }
 
         .ai-chat-window {
-            position: fixed; bottom: 85px; right: 25px;
+            position: fixed; bottom: 140px; right: 25px;
             width: 380px; max-width: 92vw; height: 540px;
             background: var(--slate-bg); border-radius: 24px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
@@ -315,7 +469,6 @@
             box-shadow: 0 4px 15px var(--cyan-glow);
         }
 
-        /* FIXED OVERLAY POPUP */
         .slate-questions-popup {
             position: absolute;
             bottom: 70px;
@@ -346,7 +499,6 @@
             border-color: var(--cyan-accent); transform: translateX(3px);
         }
 
-        /* INPUT AREA */
         .chat-input-area {
             padding: 14px 16px; background: #1c2541;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -369,7 +521,6 @@
             box-shadow: 0 4px 12px var(--cyan-glow);
         }
 
-        /* CONTACT SECTION WITH LOCATION BUTTON */
         .contact-section { 
             background: var(--nav-contact-bg); color: #ffffff; padding: 60px 24px; text-align: center; 
             border-top: 3px solid var(--primary-orange);
@@ -394,24 +545,142 @@
             transform: scale(1.05);
         }
 
-        /* MEDIA / MOBILE RESPONSIVE FIXES FOR CHAT HEIGHT */
         @media (max-width: 600px) {
-            .chipso-title { font-size: 3.2rem; }
-            nav { justify-content: space-around; padding: 4px 5px; }
-            nav a { padding: 12px 10px; font-size: 0.76rem; letter-spacing: 0px; }
-            .product-container { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .product-card { padding: 12px 8px; }
-            .product-img { height: 170px; }
-            .hero-section h2 { font-size: 1.8rem; }
-            .hero-section p { font-size: 1.05rem; }
-            
-            /* INCREASED CHAT HEIGHT & RESPONSIVENESS ON MEDIA / MOBILE */
-            .ai-chat-btn { bottom: 15px; right: 15px; padding: 12px 20px; font-size: 0.9rem; }
-            .ai-chat-window { 
-                right: 10px; left: 10px; width: auto; max-width: 100vw; 
-                bottom: 70px; height: 82vh; max-height: 580px; 
-            }
+        /* Mobile Compact Header Configuration - Left Aligned */
+        header.flipkart-compact {
+            padding: 12px 16px !important;
+            height: auto !important;
+            position: sticky !important;
+            top: 0;
+            z-index: 1001;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+            border-bottom: 3px solid var(--primary-orange) !important;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+            text-align: left !important;
         }
+
+        /* Top Row-il Title-um Foods-um Left side-ilekku cherthu vekkan */
+        header.flipkart-compact .header-top-row {
+            justify-content: flex-start !important;
+            align-items: baseline !important;
+            gap: 8px !important;
+            width: 100% !important;
+        }
+
+        header.flipkart-compact .chipso-title {
+            font-size: 2rem !important;
+            line-height: 1 !important;
+            filter: none;
+            justify-content: flex-start !important;
+        }
+
+        header.flipkart-compact h2 {
+            display: inline-block !important;
+            font-size: 0.9rem !important;
+            color: #fbbf24 !important;
+            letter-spacing: 2px !important;
+            margin: 0 !important;
+            font-weight: 700 !important;
+            text-transform: lowercase !important;
+        }
+
+        header.flipkart-intro .header-profile-container {
+            display: none !important;
+        }
+
+        /* Profile Icon Right Side-il thanne irikkum */
+        header.flipkart-compact .header-profile-container {
+            display: block !important;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        header.flipkart-intro {
+            position: fixed !important;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(180deg, #fffbeb 0%, #fff7ed 100%);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        header.flipkart-intro .chipso-title {
+            font-size: 15vw !important;
+        }
+
+        header.flipkart-intro h2 {
+            font-size: 1.2rem !important;
+            letter-spacing: 2px !important;
+            margin-top: 4px !important;
+            margin-bottom: 8px !important;
+        }
+
+        header.flipkart-intro p {
+            display: none !important;
+        }
+
+        header.flipkart-intro .insta-sticker-panel {
+            display: flex !important;
+        }
+
+        header.flipkart-compact p,
+        header.flipkart-compact .insta-sticker-panel {
+            display: none !important;
+        }
+
+        nav {
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            top: auto !important;
+            width: 100% !important;
+            background: #0f172a !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-bottom: none !important;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3) !important;
+            z-index: 1003 !important;
+            display: flex !important;
+            justify-content: space-around !important;
+            align-items: center !important;
+            padding: 10px 0 !important;
+            overflow-x: visible !important;
+        }
+
+        nav a {
+            padding: 6px 10px !important;
+            font-size: 0.7rem !important;
+            text-align: center !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 3px !important;
+            letter-spacing: 0px !important;
+            background: transparent !important;
+        }
+
+        nav a:hover {
+            background: transparent !important;
+            color: #fbbf24 !important;
+        }
+
+        .product-container { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .product-card { padding: 12px 8px; }
+        .product-img { height: 170px; }
+        .hero-section h2 { font-size: 1.8rem; }
+        .hero-section p { font-size: 1.05rem; }
+        
+        .ai-chat-btn { bottom: 75px; right: 15px; padding: 10px 16px; font-size: 0.85rem; }
+        .ai-chat-window { 
+            right: 10px; left: 10px; width: auto; max-width: 100vw; 
+            bottom: 130px; height: 75vh; max-height: 520px; 
+        }
+    }
     </style>
 </head>
 <body>
@@ -419,6 +688,22 @@
     <!-- Splash Screen Layer -->
     <div id="splash-screen">
         <img src="logo1.png" alt="Chipso Snaxx Logo" class="splash-logo">
+    </div>
+
+    <!-- LOG IN OR SIGN UP MODAL POPUP -->
+    <div class="google-signin-overlay" id="googleSignInModal">
+        <div class="google-signin-box">
+            <div class="modal-close-btn" onclick="closeGoogleModal()">✕</div>
+
+            <div class="modal-title">Log in or sign up</div>
+            <div class="modal-subtitle">You'll get smarter responses and can upload files, images, and more.</div>
+
+            <!-- Single Continue with Google Button -->
+            <button class="continue-google-btn" onclick="simulateGoogleSignIn()">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c-.07-.8-.64-1.54-1.42-1.77H12v4.5h6.61c-.29 1.54-1.52 2.7-3.11 3.14v2.61h5.02c2.94-2.7 4.92-6.68 4.22-10.48z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-5.02-2.61c-1.08.72-2.46 1.15-4.11 1.15-3.17 0-5.86-2.14-6.82-5.02H.05v2.74C2.08 21.36 6.74 24 12 24z"/><path fill="#FBBC05" d="M5.18 14.61c-.25-.72-.39-1.49-.39-2.61s.14-1.89.39-2.61V6.65H.05C-.62 8.01-1 9.57-1 11.5s.38 3.49 1.05 4.85l5.13-2.74z"/><path fill="#EA4335" d="M12 4.75c1.76 0 3.34.61 4.58 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 6.74 0 2.08 2.64.05 6.65l5.13 2.74c.96-2.88 3.65-5.02 6.82-5.02z"/></svg>
+                <span>Continue with Google</span>
+            </button>
+        </div>
     </div>
 
     <!-- AI Chat Floating Button -->
@@ -446,7 +731,6 @@
             </div>
         </div>
 
-        <!-- Fixed Overlay Popup Box -->
         <div class="slate-questions-popup" id="questionsPopup">
             <div style="font-size:0.75rem; color:#38bdf8; font-weight:bold; margin-bottom:4px;">ക്ലിക്ക് ചെയ്ത് ചോദ്യങ്ങൾ തിരഞ്ഞെടുക്കൂ:</div>
             <button class="slate-q-btn" onclick="sendDirectQuestion('min', '📦 മിനിമം എത്ര പാക്കറ്റ് ഓർഡർ ചെയ്യണം?')">📦 മിനിമം എത്ര പാക്കറ്റ് ഓർഡർ ചെയ്യണം?</button>
@@ -457,7 +741,6 @@
             <button class="slate-q-btn" onclick="sendDirectQuestion('quality', '⭐ ക്വാളിറ്റി ഗ്യാരണ്ടി ഉണ്ടോ?')">⭐ ക്വാളിറ്റി ഗ്യാരണ്ടി ഉണ്ടോ?</button>
         </div>
 
-        <!-- Slate Blue Input Field Area -->
         <div class="chat-input-area">
             <input type="text" class="chat-input-field" id="chatInputField" placeholder="Tap to select question..." onclick="toggleQuestionsPopup()" readonly>
             <button class="chat-send-btn" onclick="toggleQuestionsPopup()">💬</button>
@@ -466,30 +749,47 @@
 
     <!-- Main Website Content -->
     <div id="main-content">
-        <header>
-            <h1 class="chipso-title">
-                <span class="c-c">C</span><span class="c-h">h</span><span class="c-i">i</span><span class="c-p">p</span><span class="c-s">s</span><span class="c-o">o</span>
-            </h1>
-            <h2>snaxx</h2>
+        <header id="mainHeader" class="flipkart-intro">
+            <div class="header-top-row">
+                <h1 class="chipso-title">
+                    <span class="c-c">C</span><span class="c-h">h</span><span class="c-i">i</span><span class="c-p">p</span><span class="c-s">s</span><span class="c-o">o</span>
+                </h1>
+                
+                <div class="header-profile-container" id="headerProfileContainer">
+                    <button class="header-profile-btn" id="profileHeaderBtn" onclick="handleProfileClick(event)" title="Profile">
+                        <svg id="headerGuestIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <img src="" alt="Profile" id="headerUserAvatar" style="display: none;">
+                    </button>
+                </div>
+            </div>
+
+            <h2>foods</h2>
             <p>"പറയാൻ രസം, കഴിക്കാൻ അതിലേറെ രസം"</p>
+            
+            <div class="insta-sticker-panel">
+                <div class="insta-sticker-content">
+                    🔥 <span>Fresh Kerala Snacks @ ₹50</span> ✨
+                </div>
+            </div>
         </header>
 
         <nav>
-            <a href="#home">Home</a>
-            <a href="#products">Products</a>
-            <a href="#reviews">Reviews</a>
-            <a href="#contact">Contact</a>
-            <a href="cart.html">Cart 🛒</a>
+            <a href="#home">🏠 <span>Home</span></a>
+            <a href="#products">📦 <span>Products</span></a>
+            <a href="#contact">📞 <span>Contact</span></a>
+            <a href="#" onclick="handleCartClick(event)">🛒 <span>Cart</span></a>
         </nav>
 
-        <!-- HERO SECTION -->
         <section class="hero-section" id="home">
+            2026 Season Specials ✨
             <h2>Fresh & Crunchy Kerala Snacks</h2>
-            <p>കോട്ടയത്തിന്റെ സ്വന്തം രുചിയിൽ,  മികച്ച സ്നാക്കുകൾ നിങ്ങളുടെ വീട്ടിലേക്ക്!</p>
+            <p>കോട്ടയത്തിന്റെ സ്വന്തം രുചിയിൽ, മികച്ച സ്നാക്കുകൾ നിങ്ങളുടെ വീട്ടിലേക്ക്!</p>
             <a href="#products" class="hero-btn">Explore Products 🛒</a>
         </section>
 
-        <!-- FEATURES / HIGHLIGHTS SECTION -->
         <section class="features-section">
             <div class="feature-box">
                 <span style="font-size: 2rem;">🍌</span>
@@ -508,12 +808,9 @@
             </div>
         </section>
 
-        <!-- ALL PRODUCTS SECTION -->
         <section class="products" id="products">
             <h2 class="section-title">Our Menu</h2>
             <div class="product-container">
-
-                <!-- Product 1: Murukku -->
                 <div class="product-card">
                     <div>
                         <div class="product-img"><img src="https://i.ibb.co/RpFxkTZK/69c9fb98-c69a-4354-bb20-78a7ab9bccf1-r1-c1.jpg" alt="Murukku"></div>
@@ -523,14 +820,13 @@
                     <div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="changeQty('Murukku', -1)">-</button>
-                            <span id="qty-Murukku">1</span>
+                            <span id="qty-Murukku">5</span>
                             <button class="qty-btn" onclick="changeQty('Murukku', 1)">+</button>
                         </div>
                         <button onclick="addToCart('Murukku',50,'Murukku','https://i.ibb.co/RpFxkTZK/69c9fb98-c69a-4354-bb20-78a7ab9bccf1-r1-c1.jpg')" class="order-btn">Add to Cart</button>
                     </div>
                 </div>
 
-                <!-- Product 2: Banana Chips -->
                 <div class="product-card">
                     <div>
                         <div class="product-img"><img src="https://i.ibb.co/Zp47rMKM/69c9fb98-c69a-4354-bb20-78a7ab9bccf1-r1-c2.jpg" alt="Banana Chips"></div>
@@ -540,14 +836,13 @@
                     <div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="changeQty('BananaChips', -1)">-</button>
-                            <span id="qty-BananaChips">1</span>
+                            <span id="qty-BananaChips">5</span>
                             <button class="qty-btn" onclick="changeQty('BananaChips', 1)">+</button>
                         </div>
                         <button onclick="addToCart('Banana Chips',50,'BananaChips','https://i.ibb.co/Zp47rMKM/69c9fb98-c69a-4354-bb20-78a7ab9bccf1-r1-c2.jpg')" class="order-btn">Add to Cart</button>
                     </div>
                 </div>
 
-                <!-- Product 3: Joystick -->
                 <div class="product-card">
                     <div>
                         <div class="product-img"><img src="https://i.ibb.co/ycx85w7Y/5f710085-b22f-4622-b498-50ab6c53aa5a.jpg" alt="Joystick"></div>
@@ -557,14 +852,13 @@
                     <div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="changeQty('Joystick', -1)">-</button>
-                            <span id="qty-Joystick">1</span>
+                            <span id="qty-Joystick">5</span>
                             <button class="qty-btn" onclick="changeQty('Joystick', 1)">+</button>
                         </div>
                         <button onclick="addToCart('Joystick',50,'Joystick','https://i.ibb.co/ycx85w7Y/5f710085-b22f-4622-b498-50ab6c53aa5a.jpg')" class="order-btn">Add to Cart</button>
                     </div>
                 </div>
 
-                <!-- Product 4: Tapioca Chips -->
                 <div class="product-card">
                     <div>
                         <div class="product-img"><img src="https://i.ibb.co/PsDT9sby/69c9fb98-c69a-4354-bb20-78a7ab9bccf1-r1-c3.jpg" alt="Tapioca Chips"></div>
@@ -574,14 +868,13 @@
                     <div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="changeQty('Tapioca', -1)">-</button>
-                            <span id="qty-Tapioca">1</span>
+                            <span id="qty-Tapioca">5</span>
                             <button class="qty-btn" onclick="changeQty('Tapioca', 1)">+</button>
                         </div>
                         <button onclick="addToCart('Tapioca Chips',50,'Tapioca','https://i.ibb.co/PsDT9sby/69c9fb98-c69a-4354-bb20-78a7ab9bccf1-r1-c3.jpg')" class="order-btn">Add to Cart</button>
                     </div>
                 </div>
 
-                <!-- Product 5: Special Murukku -->
                 <div class="product-card">
                     <div>
                         <div class="product-img"><img src="https://i.ibb.co/VWQDkyXZ/7106bb05-ef96-4edb-9aa8-68aa5beeacda.jpg" alt="Special Murukku"></div>
@@ -591,14 +884,13 @@
                     <div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="changeQty('SpecialMurukku', -1)">-</button>
-                            <span id="qty-SpecialMurukku">1</span>
+                            <span id="qty-SpecialMurukku">5</span>
                             <button class="qty-btn" onclick="changeQty('SpecialMurukku', 1)">+</button>
                         </div>
                         <button onclick="addToCart('Special Murukku',50,'SpecialMurukku','https://i.ibb.co/VWQDkyXZ/7106bb05-ef96-4edb-9aa8-68aa5beeacda.jpg')" class="order-btn">Add to Cart</button>
                     </div>
                 </div>
 
-                <!-- Product 6: Cheese Balls -->
                 <div class="product-card">
                     <div>
                         <div class="product-img"><img src="https://i.ibb.co/5X3VD5xB/69c9fb98-c69a-4354-bb20-78a7ab9bccf1-r2-c2.jpg" alt="Cheese Balls"></div>
@@ -608,43 +900,18 @@
                     <div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="changeQty('CheeseBalls', -1)">-</button>
-                            <span id="qty-CheeseBalls">1</span>
+                            <span id="qty-CheeseBalls">5</span>
                             <button class="qty-btn" onclick="changeQty('CheeseBalls', 1)">+</button>
                         </div>
                         <button onclick="addToCart('Cheese Balls',50,'CheeseBalls','https://i.ibb.co/5X3VD5xB/69c9fb98-c69a-4354-bb20-78a7ab9bccf1-r2-c2.jpg')" class="order-btn">Add to Cart</button>
                     </div>
                 </div>
-
             </div>
 
-            <!-- MAIN BIG "PLACE YOUR ORDER" BUTTON (EXACTLY AS REQUESTED IN IMAGE) -->
             <div class="main-place-order-wrapper">
-                <a href="cart.html" class="main-place-order-btn">
+                <a href="#" onclick="handleCartClick(event)" class="main-place-order-btn">
                     PLACE YOUR ORDER 🛒
                 </a>
-            </div>
-        </section>
-
-        <section class="reviews-section" id="reviews">
-            <h2 class="section-title" style="margin-bottom: 5px;">Customer Reviews</h2>
-            <p style="color: var(--text-sub); margin-bottom: 20px;">👈 Swipe to sides to read reviews 👉</p>
-            
-            <div class="review-slider-container">
-                <div class="review-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"Banana chips super crunchy ആണ്!"</p>
-                    <h4>- Anjali, Ernakulam</h4>
-                </div>
-                <div class="review-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"Murukku & Joystick ഓർഡർ ചെയ്തിരുന്നു. 2 ദിവസത്തിനുള്ളിൽ കിട്ടി!"</p>
-                    <h4>- Rahul, Kottayam</h4>
-                </div>
-                <div class="review-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"5kg Wholesale പാക്കറ്റുകളായി ബിസിനസ്സിന് ലഭിച്ചു, Very fresh!"</p>
-                    <h4>- Sreejith, Alappuzha</h4>
-                </div>
             </div>
         </section>
 
@@ -654,7 +921,6 @@
                 <p>📞 +91 9744390615 | +91 9744390657</p>
                 <p>📧 shahid321bila@gmail.com</p>
                 <p>📍 Kottayam, Kerala</p>
-                <!-- LOCATION BUTTON ADDED -->
                 <a href="https://maps.google.com/?q=Kottayam,Kerala" target="_blank" class="location-btn">
                     📍 View Location on Map
                 </a>
@@ -663,26 +929,113 @@
     </div>
 
 <script>
+let pendingCartItem = null;
+
 window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         const splash = document.getElementById('splash-screen');
-        splash.classList.add('splash-hidden');
+        if (splash) splash.classList.add('splash-hidden');
         document.getElementById('main-content').style.filter = 'none';
     }, 1000); 
+
+    if (window.innerWidth <= 600) {
+        setTimeout(() => {
+            const header = document.getElementById('mainHeader');
+            if (header) {
+                header.classList.remove('flipkart-intro');
+                header.classList.add('flipkart-compact');
+            }
+        }, 2500); 
+    }
+
+    checkAndUpdateUserUI();
 });
 
-/* Toggle AI Chatbot Window */
+function checkAndUpdateUserUI() {
+    let loggedUser = localStorage.getItem("googleUserSignedIn");
+    if (loggedUser) {
+        try {
+            let userData = JSON.parse(loggedUser);
+            showProfileHeader(userData);
+        } catch (e) {
+            showGuestHeader();
+        }
+    } else {
+        showGuestHeader();
+    }
+}
+
+function handleProfileClick(e) {
+    e.preventDefault();
+    let loggedUser = localStorage.getItem("googleUserSignedIn");
+    if (!loggedUser) {
+        document.getElementById('googleSignInModal').style.display = 'flex';
+    } else {
+        window.location.href = "profile.html";
+    }
+}
+
+function handleCartClick(e) {
+    e.preventDefault();
+    let loggedUser = localStorage.getItem("googleUserSignedIn");
+    if (!loggedUser) {
+        document.getElementById('googleSignInModal').style.display = 'flex';
+    } else {
+        window.location.href = "cart.html";
+    }
+}
+
+function closeGoogleModal() {
+    document.getElementById('googleSignInModal').style.display = 'none';
+    pendingCartItem = null;
+}
+
+function simulateGoogleSignIn() {
+    let userData = {
+        name: "Shahid Bilal",
+        email: "shahid321bilal@gmail.com",
+        avatar: "https://ui-avatars.com/api/?name=Shahid+Bilal&background=ea580c&color=fff" 
+    };
+    
+    localStorage.setItem("googleUserSignedIn", JSON.stringify(userData));
+    showProfileHeader(userData);
+    closeGoogleModal();
+
+    if (pendingCartItem) {
+        processAddToCart(pendingCartItem.name, pendingCartItem.price, pendingCartItem.id, pendingCartItem.img);
+        pendingCartItem = null;
+        window.location.href = "cart.html";
+    } else {
+        window.location.reload();
+    }
+}
+
+function showProfileHeader(user) {
+    const avatarImg = document.getElementById('headerUserAvatar');
+    const guestIcon = document.getElementById('headerGuestIcon');
+    if (user && user.avatar) {
+        avatarImg.src = user.avatar;
+        avatarImg.style.display = 'block';
+        if (guestIcon) guestIcon.style.display = 'none';
+    }
+}
+
+function showGuestHeader() {
+    const avatarImg = document.getElementById('headerUserAvatar');
+    const guestIcon = document.getElementById('headerGuestIcon');
+    if (avatarImg) avatarImg.style.display = 'none';
+    if (guestIcon) guestIcon.style.display = 'block';
+}
+
 function toggleAIChat() {
     const chatWin = document.getElementById('aiChatWindow');
     const isVisible = (chatWin.style.display === 'flex');
     chatWin.style.display = isVisible ? 'none' : 'flex';
-    
     if (isVisible) {
         document.getElementById('questionsPopup').style.display = 'none';
     }
 }
 
-/* Toggle Questions Popup Overlay */
 function toggleQuestionsPopup() {
     const popup = document.getElementById('questionsPopup');
     if (popup.style.display === 'flex') {
@@ -692,31 +1045,23 @@ function toggleQuestionsPopup() {
     }
 }
 
-/* Click Question -> Instant Send -> Auto Scroll & Hide Popup */
 function sendDirectQuestion(type, questionText) {
     const chatBody = document.getElementById('chatBody');
     const popup = document.getElementById('questionsPopup');
-    
     popup.style.display = 'none';
 
-    // 1. Add User Question Bubble
     const userMsg = document.createElement('div');
     userMsg.className = 'msg-bubble msg-user';
     userMsg.innerText = questionText;
     chatBody.appendChild(userMsg);
-
     chatBody.scrollTop = chatBody.scrollHeight;
 
-    // 2. Add AI Bot Response Bubble
     setTimeout(() => {
         let answerText = "";
-
         if (type === 'min') {
-            answerText = "📦 **ഉത്തരം:** ഏതൊരു പ്രൊഡക്റ്റും ഓർഡർ ചെയ്യാൻ സാധിക്കും.";
+            answerText = "📦 **ഉത്തരം:** ഏതൊരു പ്രൊഡക്റ്റും ഓർഡർ ചെയ്യാൻ സാധിക്കും. മിനിമം ക്വാണ്ടിറ്റി 5 പാക്കറ്റ് ആണ്.";
         } else if (type === 'wholesale') {
             answerText = "🏪 **ഉത്തരം:** തീർച്ചയായും! കടകൾക്കായി Wholesale നിരക്കിൽ ലഭിക്കും.";
-        } else if (type === 'oil') {
-            answerText = "🥥 **ഉത്തരം:** 100% ശുദ്ധമായ കേര വെളിച്ചെണ്ണയിലാണ് എല്ലാ സ്നാക്കുകളും വറുത്തെടുക്കുന്നത്.";
         } else if (type === 'time') {
             answerText = "🚚 **ഉത്തരം:** കേരളത്തിൽ എവിടെയും 2 മുതൽ 4 ദിവസത്തിനുള്ളിൽ ഡെലിവറി ലഭ്യമാണ്.";
         } else if (type === 'custompack') {
@@ -741,19 +1086,35 @@ let itemQuantities = {};
 function changeQty(id, change) {
     if (!itemQuantities[id]) {
         let currentQtyText = document.getElementById('qty-' + id).innerText;
-        itemQuantities[id] = parseInt(currentQtyText) || 1;
+        itemQuantities[id] = parseInt(currentQtyText) || 5;
     }
-    itemQuantities[id] += change;
-    if (itemQuantities[id] < 1) {
-        itemQuantities[id] = 1;
+    
+    if (itemQuantities[id] + change < 5) {
+        alert("Minimum order quantity is 5 packets!");
+        itemQuantities[id] = 5;
+    } else {
+        itemQuantities[id] += change;
     }
+    
     document.getElementById('qty-' + id).innerText = itemQuantities[id];
 }
 
 function addToCart(name, price, id, img) {
+    let loggedUser = localStorage.getItem("googleUserSignedIn");
+    if (!loggedUser) {
+        pendingCartItem = { name, price, id, img };
+        document.getElementById('googleSignInModal').style.display = 'flex';
+    } else {
+        processAddToCart(name, price, id, img);
+    }
+}
+
+function processAddToCart(name, price, id, img) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let qtyElement = document.getElementById('qty-' + id);
-    let qty = qtyElement ? parseInt(qtyElement.innerText) : 1;
+    let qty = qtyElement ? parseInt(qtyElement.innerText) : 5;
+
+    if (qty < 5) qty = 5;
 
     let existingItem = cart.find(p => p.name === name);
     if (existingItem) {
@@ -764,8 +1125,8 @@ function addToCart(name, price, id, img) {
 
     localStorage.setItem("cart", JSON.stringify(cart));
     alert(qty + " pkt " + name + " കാർട്ടിലേക്ക് ചേർത്തു!");
-    if (qtyElement) qtyElement.innerText = "1";
-    itemQuantities[id] = 1;
+    if (qtyElement) qtyElement.innerText = "5";
+    itemQuantities[id] = 5;
 }
 </script>   
 </body>
