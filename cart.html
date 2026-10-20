@@ -338,10 +338,9 @@ function loadCart(){
     }
 
     cart.forEach((item, index) => {
-        // Enforce minimum 5 packets on initial cart load
-        if (!item.qty || item.qty < 5) {
-            item.qty = 5;
-        }
+      if (!item.qty || item.qty < 3) {
+    item.qty = 3;
+}
 
         let row = tableBody.insertRow();
         row.innerHTML = `
@@ -371,9 +370,9 @@ function loadCart(){
 }
 
 function updateQty(index, change) {
-    // 5-ൽ താഴെ ആകാൻ ശ്രമിച്ചാൽ തടയുന്നു (മിനിമം ക്വാണ്ടിറ്റി 5)
-    if (cart[index].qty + change < 5) {
-        alert("Minimum order quantity is 5 packets!");
+    // 3-ൽ താഴെ ആകാൻ ശ്രമിച്ചാൽ തടയുന്നു (മിനിമം ക്വാണ്ടിറ്റി 5)
+    if (cart[index].qty + change < 3) {
+        alert("Minimum order quantity is 3 packets!");
         return;
     }
     
@@ -400,7 +399,7 @@ function goToOrder(){
     }
     
     let summary = cart.map(item => {
-        let quantity = item.qty || 5;
+        let quantity = item.qty || 3;
         return `${item.name} x ${quantity}`;
     }).join(", ");
 
