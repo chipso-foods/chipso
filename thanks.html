@@ -31,8 +31,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-y: auto;
             position: relative;
         }
 
@@ -67,15 +67,16 @@
         .container {
             text-align: center;
             background: rgba(255, 255, 255, 0.45);
-            padding: 50px 35px;
+            padding: 40px 30px;
             border-radius: 32px;
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            max-width: 420px;
+            max-width: 450px;
             width: 85%;
             box-shadow: var(--luxury-shadow);
             animation: containerFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            margin: 20px 0;
         }
 
         @keyframes containerFadeUp {
@@ -84,16 +85,16 @@
         }
 
         .icon-box {
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             background: var(--accent);
             color: white;
-            font-size: 45px;
+            font-size: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            margin: 0 auto 25px;
+            margin: 0 auto 20px;
             box-shadow: 0 10px 25px rgba(46, 204, 113, 0.3);
             animation: scaleUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
         }
@@ -105,23 +106,49 @@
 
         h1 {
             color: var(--dark-color);
-            font-size: 2.2rem;
-            margin-bottom: 12px;
+            font-size: 2rem;
+            margin-bottom: 10px;
             font-weight: 800;
             letter-spacing: -0.5px;
         }
 
         p {
             color: #444;
-            font-size: 1.05rem;
-            margin-bottom: 35px;
-            line-height: 1.6;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
             font-weight: 400;
+        }
+
+        /* Desktop / Non-WhatsApp User Alert Box */
+        .whatsapp-alert-box {
+            background: #fff7ed;
+            border: 2px dashed #f97316;
+            padding: 16px;
+            border-radius: 16px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .whatsapp-alert-box h4 {
+            color: #ea580c;
+            margin: 0 0 8px 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .whatsapp-alert-box p {
+            color: #374151;
+            font-size: 0.88rem;
+            margin: 0;
+            line-height: 1.4;
         }
 
         /* Premium Golden Button (Rounded) */
         .btn-home {
-            padding: 16px 45px;
+            padding: 15px 40px;
             border: none;
             border-radius: 50px;
             background: var(--premium-gold);
@@ -135,6 +162,7 @@
             display: inline-block;
             box-shadow: 0 5px 15px rgba(212, 172, 13, 0.25);
             letter-spacing: 0.5px;
+            margin-top: 10px;
         }
 
         .btn-home:hover {
@@ -159,11 +187,11 @@
         }
 
         @media (max-width: 480px) {
-            .container { padding: 40px 20px; width: 90%; }
-            h1 { font-size: 1.8rem; }
-            p { font-size: 0.95rem; margin-bottom: 25px; }
-            .btn-home { padding: 14px 35px; font-size: 0.85rem; }
-            .icon-box { width: 80px; height: 80px; font-size: 38px; }
+            .container { padding: 30px 18px; width: 90%; }
+            h1 { font-size: 1.6rem; }
+            p { font-size: 0.9rem; margin-bottom: 15px; }
+            .btn-home { padding: 14px 30px; font-size: 0.85rem; }
+            .icon-box { width: 70px; height: 70px; font-size: 32px; }
         }
     </style>
 </head>
@@ -180,6 +208,16 @@
         <h1>Order Confirmed!</h1>
         <p>Thank you for choosing Kyachee Snaxx. We've received your order and started preparing your fresh snacks! 🍟</p>
         
+        <!-- WhatsApp Not Found / Desktop User Notice -->
+        <div class="whatsapp-alert-box">
+            <h4>⚠️ WhatsApp Not Opening? Don't Worry!</h4>
+            <p>
+                Ningalude device-il WhatsApp illenkil, <strong>Name</strong>um <strong>Product details</strong>um ezhuthi 
+                <strong style="color: #ea580c; font-size: 0.95rem;">9744390615</strong> 
+                enna number-ilekku direct SMS / message ayachaal mathi.
+            </p>
+        </div>
+
         <a href="index.html" class="btn-home">Back to Store</a>
     </div>
 
@@ -194,7 +232,7 @@
                 confetti.style.animationDelay = Math.random() * 2.5 + 's';
                 confetti.style.animationDuration = (Math.random() * 1.5 + 2.5) + 's';
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                // Randomize sizing slightly for a layered depth look
+                
                 const size = Math.random() * 6 + 6;
                 confetti.style.width = size + 'px';
                 confetti.style.height = size + 'px';
