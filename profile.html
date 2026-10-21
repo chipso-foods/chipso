@@ -99,7 +99,6 @@
             color: var(--primary-orange);
         }
 
-        /* --- ORDERS INLINE DISPLAY SECTION --- */
         .orders-container {
             display: none;
             margin-top: 15px;
@@ -200,6 +199,61 @@
         }
 
         .back-home:hover { text-decoration: underline; }
+
+        /* --- BOTTOM NAV (media only, copied from index.html) --- */
+        #navbar { display: none; }
+
+        @media (max-width: 600px) {
+            body {
+                padding-bottom: 80px;
+                align-items: flex-start;
+                padding-top: 30px;
+            }
+
+            #navbar {
+                display: flex !important;
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                background: #0f172a !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3) !important;
+                z-index: 1003 !important;
+                justify-content: space-around !important;
+                align-items: center !important;
+                padding: 10px 0 !important;
+            }
+
+            #navbar .nav-link {
+                padding: 6px 10px !important;
+                font-size: 0.7rem !important;
+                text-align: center !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 3px !important;
+                color: #ffffff !important;
+                text-decoration: none !important;
+                text-transform: uppercase;
+                font-weight: 700;
+                background: transparent !important;
+            }
+
+            #navbar .nav-link:hover {
+                color: #fbbf24 !important;
+            }
+
+            #navbar .nav-link.active-jelly {
+                background: linear-gradient(90deg, #ff8a00, #ff4d00) !important;
+                color: #ffffff !important;
+                border-radius: 28px !important;
+                padding: 10px 15px !important;
+                flex-direction: row !important;
+                font-size: 0.75rem !important;
+                box-shadow: 0 5px 18px rgba(255, 106, 0, 0.35) !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -222,7 +276,6 @@
                 <span id="arrowIcon">▼</span>
             </div>
 
-            <!-- Inlined Orders Section -->
             <div class="orders-container" id="ordersContainer">
                 <!-- Orders will load dynamically -->
             </div>
@@ -233,6 +286,14 @@
         <br>
         <a href="index.html" class="back-home">← Back to Home Page</a>
     </div>
+
+    <!-- Bottom Nav (media only) -->
+    <nav id="navbar">
+        <a href="index.html" class="nav-link">🏠 <span>Home</span></a>
+        <a href="index.html#products" class="nav-link">📦 <span>Products</span></a>
+        <a href="index.html#contact" class="nav-link">📞 <span>Contact</span></a>
+        <a href="cart.html" class="nav-link">🛒 <span>Cart</span></a>
+    </nav>
 
     <script>
         window.addEventListener('DOMContentLoaded', () => {
