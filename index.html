@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Outfit:wght@300;400;600;800&family=Poppins:wght@300;400;500;700&family=Anek+Malayalam:wght@500;700&display=swap" rel="stylesheet">
     
     <!-- Official Google Identity Services SDK -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>                  
 
     <style>
         :root {
@@ -1106,7 +1106,7 @@ header.flipkart-compact h2 {
                     <div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="changeQty('Murukku', -1)">-</button>
-                            <span id="qty-Murukku">3</span>
+                            <span id="qty-Murukku">1</span>
                             <button class="qty-btn" onclick="changeQty('Murukku', 1)">+</button>
                         </div>
                         <button onclick="addToCart('Murukku',50,'Murukku','https://i.ibb.co/RpFxkTZK/69c9fb98-c69a-4354-bb20-78a7ab9bccf1-r1-c1.jpg')" class="order-btn">Add to Cart</button>
@@ -1122,7 +1122,7 @@ header.flipkart-compact h2 {
                     <div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="changeQty('BananaChips', -1)">-</button>
-                            <span id="qty-BananaChips">3</span>
+                            <span id="qty-BananaChips">1</span>
                             <button class="qty-btn" onclick="changeQty('BananaChips', 1)">+</button>
                         </div>
                         <button onclick="addToCart('Banana Chips',50,'BananaChips','https://i.ibb.co/Zp47rMKM/69c9fb98-c69a-4354-bb20-78a7ab9bccf1-r1-c2.jpg')" class="order-btn">Add to Cart</button>
@@ -1138,7 +1138,7 @@ header.flipkart-compact h2 {
                     <div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="changeQty('Joystick', -1)">-</button>
-                            <span id="qty-Joystick">3</span>
+                            <span id="qty-Joystick">1</span>
                             <button class="qty-btn" onclick="changeQty('Joystick', 1)">+</button>
                         </div>
                         <button onclick="addToCart('Joystick',50,'Joystick','https://i.ibb.co/ycx85w7Y/5f710085-b22f-4622-b498-50ab6c53aa5a.jpg')" class="order-btn">Add to Cart</button>
@@ -1154,7 +1154,7 @@ header.flipkart-compact h2 {
                     <div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="changeQty('Tapioca', -1)">-</button>
-                            <span id="qty-Tapioca">3</span>
+                            <span id="qty-Tapioca">1</span>
                             <button class="qty-btn" onclick="changeQty('Tapioca', 1)">+</button>
                         </div>
                         <button onclick="addToCart('Tapioca Chips',50,'Tapioca','https://i.ibb.co/PsDT9sby/69c9fb98-c69a-4354-bb20-78a7ab9bccf1-r1-c3.jpg')" class="order-btn">Add to Cart</button>
@@ -1170,7 +1170,7 @@ header.flipkart-compact h2 {
                     <div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="changeQty('SpecialMurukku', -1)">-</button>
-                            <span id="qty-SpecialMurukku">3</span>
+                            <span id="qty-SpecialMurukku">1</span>
                             <button class="qty-btn" onclick="changeQty('SpecialMurukku', 1)">+</button>
                         </div>
                         <button onclick="addToCart('Special Murukku',50,'SpecialMurukku','https://i.ibb.co/VWQDkyXZ/7106bb05-ef96-4edb-9aa8-68aa5beeacda.jpg')" class="order-btn">Add to Cart</button>
@@ -1186,7 +1186,7 @@ header.flipkart-compact h2 {
                     <div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="changeQty('CheeseBalls', -1)">-</button>
-                            <span id="qty-CheeseBalls">3</span>
+                            <span id="qty-CheeseBalls">1</span>
                             <button class="qty-btn" onclick="changeQty('CheeseBalls', 1)">+</button>
                         </div>
                         <button onclick="addToCart('Cheese Balls',50,'CheeseBalls','https://i.ibb.co/5X3VD5xB/69c9fb98-c69a-4354-bb20-78a7ab9bccf1-r2-c2.jpg')" class="order-btn">Add to Cart</button>
@@ -1216,7 +1216,7 @@ header.flipkart-compact h2 {
 
 <script>
 var pendingCartItem = null;
-const MIN_CART_LIMIT = 3;
+const MIN_CART_LIMIT = 1;
 
 window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
@@ -1338,8 +1338,8 @@ function toggleQuestionsPopup() {
 
 const chatData = {
     'min': {
-        q: '📦 Minimum Order Quantity',
-        a: '📦 **Answer:** Minimum order quantity is **3 packets**. You can select any combination of products.',
+        q: '📦 Can I order just one packet?',
+        a: '📦 **Answer:** Yes! You can order from just **1 packet**. Choose the quantity you want for each product.',
         sub: [
             { q: '💳 What payment options are available?', a: '💳 We accept UPI (GPay, PhonePe, Paytm), Net Banking, and COD on select bulk orders.' },
             { q: '🚚 Is shipping free for 3 packets?', a: '🚚 Nominal delivery charge applies depending on your location across Kerala.' }
@@ -1461,19 +1461,16 @@ function sendSubQuestion(questionText, answerText) {
 let itemQuantities = {};
 
 function changeQty(id, change) {
-    if (!itemQuantities[id]) {
-        let currentQtyText = document.getElementById('qty-' + id).innerText;
-        itemQuantities[id] = parseInt(currentQtyText) || MIN_CART_LIMIT;
+    const qtyElement = document.getElementById('qty-' + id);
+    if (!qtyElement) return;
+
+    if (itemQuantities[id] === undefined) {
+        itemQuantities[id] = parseInt(qtyElement.innerText, 10) || 1;
     }
-    
-    if (itemQuantities[id] + change < MIN_CART_LIMIT) {
-        alert("Minimum order quantity is " + MIN_CART_LIMIT + " packets!");
-        itemQuantities[id] = MIN_CART_LIMIT;
-    } else {
-        itemQuantities[id] += change;
-    }
-    
-    document.getElementById('qty-' + id).innerText = itemQuantities[id];
+
+    // Allow any quantity from 1 packet upwards; never go below 1.
+    itemQuantities[id] = Math.max(1, itemQuantities[id] + change);
+    qtyElement.innerText = itemQuantities[id];
 }
 
 function addToCart(name, price, id, img) {
@@ -1489,9 +1486,8 @@ function addToCart(name, price, id, img) {
 function processAddToCart(name, price, id, img) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let qtyElement = document.getElementById('qty-' + id);
-    let qty = qtyElement ? parseInt(qtyElement.innerText) : MIN_CART_LIMIT;
-
-    if (qty < MIN_CART_LIMIT) qty = MIN_CART_LIMIT;
+    let qty = qtyElement ? parseInt(qtyElement.innerText, 10) : 1;
+    qty = Math.max(1, Number.isFinite(qty) ? qty : 1);
 
     let existingItem = cart.find(p => p.name === name);
     if (existingItem) {
@@ -1501,9 +1497,9 @@ function processAddToCart(name, price, id, img) {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert(qty + " pkt " + name + " added to Cart!");
-    if (qtyElement) qtyElement.innerText = MIN_CART_LIMIT;
-    itemQuantities[id] = MIN_CART_LIMIT;
+    alert(qty + (qty === 1 ? " packet of " : " packets of ") + name + " added to cart!");
+    if (qtyElement) qtyElement.innerText = 1;
+    itemQuantities[id] = 1;
 }
 
 </script>   
@@ -1514,12 +1510,13 @@ import { getFirestore, collection, doc, addDoc, getDocs, getDoc, query, orderBy,
 
 // IMPORTANT: Replace every value below with your own Firebase web-app config.
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAh10EubxsLMReDKIMDE-tBTmZVQUFlfaM",
+  authDomain: "chipso-foods.firebaseapp.com",
+  projectId: "chipso-foods",
+  storageBucket: "chipso-foods.firebasestorage.app",
+  messagingSenderId: "857491576073",
+  appId: "1:857491576073:web:b35588a84db1d011936fd8",
+  measurementId: "G-HEMT0BJ3TK"
 };
 
 const configMissing = Object.values(firebaseConfig).some(v => !v || v.startsWith("YOUR_"));
@@ -1703,3 +1700,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
+    
