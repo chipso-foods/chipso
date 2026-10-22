@@ -278,6 +278,26 @@
             line-height: 1.4;
         }
 
+        .auth-input {
+            width: 100%; box-sizing: border-box; margin: 7px 0; padding: 12px 14px;
+            border-radius: 10px; border: 1px solid #555; background: #171717; color: #fff;
+            outline: none; font: inherit;
+        }
+        .auth-action-btn {
+            width: 100%; margin: 7px 0; padding: 12px 16px; border-radius: 30px;
+            border: 0; background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: #fff; font-weight: 700; cursor: pointer;
+        }
+        .auth-secondary-btn {
+            width: 100%; margin: 5px 0; padding: 11px 16px; border-radius: 30px;
+            border: 1px solid rgba(255,255,255,.2); background: #303030; color: #fff; cursor: pointer;
+        }
+        #authStatus { color: #ffd1b0; font-size: .82rem; min-height: 1.3em; overflow-wrap: anywhere; }
+        .chipso-history-panel { display:none; flex:1; min-height:0; overflow:auto; padding:12px; background:#0b132b; color:#fff; }
+        .chipso-history-item { display:block; width:100%; text-align:left; padding:11px; margin:6px 0; color:#fff; background:#1c2541; border:1px solid rgba(56,189,248,.25); border-radius:10px; cursor:pointer; }
+        .chipso-history-controls { display:flex; gap:6px; }
+        .chipso-history-controls button { background:#1c2541; color:#fff; border:1px solid rgba(255,255,255,.15); border-radius:8px; padding:7px 9px; cursor:pointer; font-size:.75rem; }
+
         .continue-google-btn {
             background: #2f2f2f;
             color: #ffffff;
@@ -948,6 +968,14 @@ header.flipkart-compact h2 {
             <div class="modal-title">Log in or sign up</div>
             <div class="modal-subtitle">You'll get smarter responses and can upload files, images, and more.</div>
 
+            <form id="chipsoEmailAuthForm" style="text-align:left;">
+                <input class="auth-input" id="chipsoAuthEmail" type="email" placeholder="Email address" autocomplete="email" required>
+                <input class="auth-input" id="chipsoAuthPassword" type="password" placeholder="Password (minimum 6 characters)" minlength="6" autocomplete="current-password" required>
+                <button class="auth-action-btn" id="chipsoEmailAuthSubmit" type="submit">Continue with email</button>
+            </form>
+            <button class="auth-secondary-btn" id="chipsoToggleSignup" type="button">Create account</button>
+            <p id="authStatus" role="status"></p>
+            <div style="color:#888;font-size:.8rem;margin:8px 0;">or continue with</div>
             <button class="continue-google-btn" onclick="simulateGoogleSignIn()">
                 <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c-.07-.8-.64-1.54-1.42-1.77H12v4.5h6.61c-.29 1.54-1.52 2.7-3.11 3.14v2.61h5.02c2.94-2.7 4.92-6.68 4.22-10.48z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-5.02-2.61c-1.08.72-2.46 1.15-4.11 1.15-3.17 0-5.86-2.14-6.82-5.02H.05v2.74C2.08 21.36 6.74 24 12 24z"/><path fill="#FBBC05" d="M5.18 14.61c-.25-.72-.39-1.49-.39-2.61s.14-1.89.39-2.61V6.65H.05C-.62 8.01-1 9.57-1 11.5s.38 3.49 1.05 4.85l5.13-2.74z"/><path fill="#EA4335" d="M12 4.75c1.76 0 3.34.61 4.58 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 6.74 0 2.08 2.64.05 6.65l5.13 2.74c.96-2.88 3.65-5.02 6.82-5.02z"/></svg>
                 <span>Continue with Google</span>
@@ -975,9 +1003,15 @@ header.flipkart-compact h2 {
                     <div style="font-size: 0.72rem; color: #22c55e; font-weight: 600;">● Online</div>
                 </div>
             </div>
-            <span style="cursor: pointer; font-size: 1.2rem; color: #94a3b8;" onclick="toggleAIChat()">✕</span>
+            <div class="chipso-history-controls">
+                <button type="button" onclick="openChipsoHistory()">History</button>
+                <button type="button" onclick="newChipsoChat()">+ New</button>
+                <button type="button" onclick="chipsoLogout()" title="Sign out">Logout</button>
+                <button type="button" onclick="toggleAIChat()" aria-label="Close chat">✕</button>
+            </div>
         </div>
 
+        <div class="chipso-history-panel" id="chipsoHistoryPanel"></div>
         <div class="chat-body" id="chatBody">
             <div class="msg-bubble msg-bot">
                 Hello! 👋 Welcome to Chipso AI. Tap on the Input Bar below to select your questions:
@@ -1181,7 +1215,7 @@ header.flipkart-compact h2 {
     </div>
 
 <script>
-let pendingCartItem = null;
+var pendingCartItem = null;
 const MIN_CART_LIMIT = 3;
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -1259,22 +1293,11 @@ function closeGoogleModal() {
 }
 
 function simulateGoogleSignIn() {
-    let userData = {
-        name: "Shahid Bilal",
-        email: "shahid321bilal@gmail.com",
-        avatar: "https://ui-avatars.com/api/?name=Shahid+Bilal&background=ea580c&color=fff" 
-    };
-    
-    localStorage.setItem("googleUserSignedIn", JSON.stringify(userData));
-    showProfileHeader(userData);
-    closeGoogleModal();
-
-    if (pendingCartItem) {
-        processAddToCart(pendingCartItem.name, pendingCartItem.price, pendingCartItem.id, pendingCartItem.img);
-        pendingCartItem = null;
-        window.location.href = "cart.html";
+    if (window.chipsoFirebaseSignInGoogle) {
+        window.chipsoFirebaseSignInGoogle();
     } else {
-        window.location.reload();
+        const status = document.getElementById('authStatus');
+        if (status) status.textContent = 'Firebase is loading. Please try again.';
     }
 }
 
@@ -1392,6 +1415,7 @@ function sendDirectQuestion(key) {
         
         chatBody.appendChild(botMsg);
         chatBody.scrollTop = chatBody.scrollHeight;
+        if (window.saveChipsoChatTurn) window.saveChipsoChatTurn(item.q, item.a.replace(/<[^>]*>/g, '').replace(/\*\*/g, ''));
 
         renderSubQuestions(key);
     }, 300);
@@ -1430,6 +1454,7 @@ function sendSubQuestion(questionText, answerText) {
         
         chatBody.appendChild(botMsg);
         chatBody.scrollTop = chatBody.scrollHeight;
+        if (window.saveChipsoChatTurn) window.saveChipsoChatTurn(questionText, answerText.replace(/<[^>]*>/g, '').replace(/\*\*/g, ''));
     }, 300);
 }
 
@@ -1480,6 +1505,201 @@ function processAddToCart(name, price, id, img) {
     if (qtyElement) qtyElement.innerText = MIN_CART_LIMIT;
     itemQuantities[id] = MIN_CART_LIMIT;
 }
+
 </script>   
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import { getFirestore, collection, doc, addDoc, getDocs, getDoc, query, orderBy, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+// IMPORTANT: Replace every value below with your own Firebase web-app config.
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const configMissing = Object.values(firebaseConfig).some(v => !v || v.startsWith("YOUR_"));
+let auth = null, db = null, currentUser = null, currentSavedChatId = null, isSignupMode = false;
+const modal = () => document.getElementById('googleSignInModal');
+const status = msg => { const el=document.getElementById('authStatus'); if(el) el.textContent=msg || ''; };
+const userChats = () => collection(db, 'users', currentUser.uid, 'chats');
+const messagesFor = id => collection(db, 'users', currentUser.uid, 'chats', id, 'messages');
+const friendly = e => ({
+ 'auth/invalid-email':'Please enter a valid email address.',
+ 'auth/invalid-credential':'Email or password is incorrect.',
+ 'auth/email-already-in-use':'This email already has an account. Please log in.',
+ 'auth/weak-password':'Use a stronger password with at least 6 characters.',
+ 'auth/popup-closed-by-user':'Google sign-in was cancelled.',
+ 'auth/unauthorized-domain':'Add your GitHub Pages domain in Firebase Authentication → Settings → Authorized domains.',
+ 'permission-denied':'Firestore rules blocked this action. Publish the provided Firestore rules.'
+}[e.code] || e.message || 'Something went wrong.');
+
+function syncLegacyUser(user) {
+  if (user) {
+    const data={name:user.displayName || (user.email ? user.email.split('@')[0] : 'User'),email:user.email || '',avatar:user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email || 'User')}&background=ea580c&color=fff`,uid:user.uid};
+    localStorage.setItem('googleUserSignedIn', JSON.stringify(data));
+    if (typeof window.showProfileHeader === 'function') window.showProfileHeader(data);
+  } else {
+    localStorage.removeItem('googleUserSignedIn');
+    if (typeof window.showGuestHeader === 'function') window.showGuestHeader();
+  }
+}
+
+function ensureHistoryUI() {
+  const chatBody=document.getElementById('chatBody');
+  const history=document.getElementById('chipsoHistoryPanel');
+  if(chatBody && history) { chatBody.style.display='flex'; history.style.display='none'; }
+}
+
+function addSavedBubble(text, role) {
+  const body=document.getElementById('chatBody');
+  const el=document.createElement('div'); el.className='msg-bubble '+(role==='user'?'msg-user':'msg-bot');
+  el.textContent=text; body.appendChild(el); body.scrollTop=body.scrollHeight;
+}
+
+window.chipsoFirebaseSignInGoogle = async () => {
+  if(configMissing) { status('First add your Firebase config in the code.'); return; }
+  try { status('Opening Google sign-in...'); await signInWithPopup(auth,new GoogleAuthProvider()); status(''); modal().style.display='none'; }
+  catch(e) { status(friendly(e)); }
+};
+window.chipsoLogout = async () => { if(!auth) return; try { await signOut(auth); currentSavedChatId=null; } catch(e) { alert(friendly(e)); } };
+window.closeGoogleModal = function(){ if(modal()) modal().style.display='none'; window.pendingCartItem=null; };
+
+const emailForm=document.getElementById('chipsoEmailAuthForm');
+if(emailForm) emailForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  if(configMissing) { status('First add your Firebase config in the code.'); return; }
+  const email=document.getElementById('chipsoAuthEmail').value.trim();
+  const password=document.getElementById('chipsoAuthPassword').value;
+  const submit=document.getElementById('chipsoEmailAuthSubmit'); submit.disabled=true;
+  try {
+    if(isSignupMode) await createUserWithEmailAndPassword(auth,email,password);
+    else await signInWithEmailAndPassword(auth,email,password);
+    status(''); modal().style.display='none';
+  } catch(err) { status(friendly(err)); }
+  finally { submit.disabled=false; }
+});
+const signupToggle=document.getElementById('chipsoToggleSignup');
+if(signupToggle) signupToggle.addEventListener('click',()=>{
+  isSignupMode=!isSignupMode;
+  document.getElementById('chipsoEmailAuthSubmit').textContent=isSignupMode?'Create account':'Login with email';
+  document.getElementById('chipsoAuthPassword').autocomplete=isSignupMode?'new-password':'current-password';
+  signupToggle.textContent=isSignupMode?'Already have an account? Login':'Create account'; status('');
+});
+
+window.saveChipsoChatTurn = async (question, answer) => {
+  if(!currentUser || !db) { if(modal()) modal().style.display='flex'; status('Please log in to save your chat history.'); return; }
+  try {
+    if(!currentSavedChatId) {
+      const chat=await addDoc(userChats(),{title:String(question).slice(0,80),createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
+      currentSavedChatId=chat.id;
+    }
+    await addDoc(messagesFor(currentSavedChatId),{question:String(question),answer:String(answer),createdAt:serverTimestamp()});
+    await setDoc(doc(userChats(),currentSavedChatId),{title:String(question).slice(0,80),updatedAt:serverTimestamp()},{merge:true});
+  } catch(e) { console.error('Could not save Chipso chat:',e); }
+};
+
+window.openChipsoHistory = async () => {
+  if(!currentUser) { modal().style.display='flex'; status('Log in to view your saved chats.'); return; }
+  const body=document.getElementById('chatBody'), panel=document.getElementById('chipsoHistoryPanel');
+  body.style.display='none'; panel.style.display='block'; panel.replaceChildren();
+  const heading=document.createElement('div'); heading.textContent='Your saved chat history'; heading.style.cssText='font-weight:700;margin:4px 0 12px'; panel.appendChild(heading);
+  try {
+    const snap=await getDocs(query(userChats(),orderBy('updatedAt','desc')));
+    if(snap.empty){ const empty=document.createElement('p'); empty.textContent='No saved chats yet. Choose a question to start one.'; panel.appendChild(empty); return; }
+    snap.forEach(d=>{ const b=document.createElement('button'); b.className='chipso-history-item'; b.textContent=d.data().title || 'Saved chat'; b.addEventListener('click',()=>window.openChipsoSavedChat(d.id)); panel.appendChild(b); });
+  } catch(e) { const err=document.createElement('p'); err.textContent=friendly(e); panel.appendChild(err); }
+};
+window.openChipsoSavedChat = async id => {
+  if(!currentUser) return;
+  const body=document.getElementById('chatBody'), panel=document.getElementById('chipsoHistoryPanel');
+  panel.style.display='none'; body.style.display='flex'; body.replaceChildren(); currentSavedChatId=id;
+  try {
+    const snap=await getDocs(query(messagesFor(id),orderBy('createdAt','asc')));
+    snap.forEach(d=>{ const m=d.data(); addSavedBubble(m.question,'user'); addSavedBubble(m.answer,'bot'); });
+    if(snap.empty) addSavedBubble('This saved chat is empty.','bot');
+  } catch(e) { addSavedBubble(friendly(e),'bot'); }
+};
+window.newChipsoChat = () => {
+  currentSavedChatId=null; const body=document.getElementById('chatBody'), panel=document.getElementById('chipsoHistoryPanel');
+  panel.style.display='none'; body.style.display='flex'; body.replaceChildren();
+  addSavedBubble('Hello! 👋 Welcome to Chipso AI. Tap on the input bar below to select your questions.','bot');
+  document.getElementById('questionsPopup').style.display='flex';
+};
+
+if(!configMissing) {
+  try {
+    const app=initializeApp(firebaseConfig); auth=getAuth(app); db=getFirestore(app);
+    onAuthStateChanged(auth, user => {
+      currentUser=user; syncLegacyUser(user);
+      if(user) {
+        if(modal()) modal().style.display='none';
+        if(window.pendingCartItem && typeof window.processAddToCart === 'function') {
+          const item=window.pendingCartItem; window.pendingCartItem=null;
+          window.processAddToCart(item.name,item.price,item.id,item.img);
+          window.location.href='cart.html';
+        }
+      }
+    });
+  } catch(e) { console.error('Firebase setup error:',e); }
+} else {
+  localStorage.removeItem('googleUserSignedIn');
+  if (typeof window.showGuestHeader === 'function') window.showGuestHeader();
+  console.warn('Chipso authentication is not configured yet. Replace firebaseConfig placeholders.');
+}
+document.addEventListener("DOMContentLoaded", function () {
+    const splashScreen = document.getElementById("splash-screen");
+    const mainHeader = document.querySelector("header");
+
+    // Page Refresh cheythiyittundo ennu check cheyyunnu
+    const isReloaded = (performance.getEntriesByType("navigation")[0]?.type === "reload");
+
+    // Internal navigation (Cart / Profile -il ninnu thirichu vannathano ennu check cheyyunnu)
+    const isInternalNavigation = sessionStorage.getItem("chipso_internal_nav");
+
+    if (isReloaded) {
+      // Refresh cheythaal internal navigation flag clear cheyyunnu
+      sessionStorage.removeItem("chipso_internal_nav");
+    }
+
+    if (sessionStorage.getItem("chipso_internal_nav") === "true") {
+      // 1. Cart/Profile pagukalil ninnu thirichu varumbol Splash Screen DIRECT HIDE cheyyunnu
+      if (splashScreen) {
+        splashScreen.style.display = "none";
+      }
+      if (mainHeader) {
+        mainHeader.classList.remove("flipkart-intro");
+        mainHeader.classList.add("flipkart-compact");
+      }
+    } else {
+      // 2. Puthiya thavana kerumbolo / Refresh cheyumbolo Splash Screen SHOW cheyyunnu
+      if (splashScreen) {
+        splashScreen.style.display = "flex";
+      }
+
+      // 2.5 seconds kazhinju splash screen hide aagum
+      setTimeout(function () {
+        if (splashScreen) {
+          splashScreen.style.transition = "opacity 0.5s ease";
+          splashScreen.style.opacity = "0";
+
+          setTimeout(() => {
+            splashScreen.style.display = "none";
+          }, 500);
+        }
+      }, 2500);
+    }
+  });
+
+  // User home page-il ninnu mattu links-il (Cart/Profile) click cheythu pokumbol flag set cheyyunnu
+  window.addEventListener("beforeunload", function () {
+    sessionStorage.setItem("chipso_internal_nav", "true");
+  });
+</script>
+
 </body>
 </html>
