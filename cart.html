@@ -531,7 +531,46 @@ th {
     }
 }
 
+/* Minimum order alert popup */
+.min-order-alert {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    max-width: 350px;
+    padding: 24px 20px;
+    background: #ffffff;
+    border: 2px solid #f97316;
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    z-index: 2000;
+}
 
+.min-order-alert p {
+    color: #1e293b;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+.min-order-alert .price {
+    color: #ef4444;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.min-order-alert button {
+    background: linear-gradient(135deg, #f59e0b, #ea580c);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 11px 28px;
+    font-weight: 700;
+    cursor: pointer;
+}
 
 @media (max-width: 600px) {
     .ai-chat-btn { display: flex !important; bottom: 75px; right: 15px; padding: 10px 16px; font-size: 0.85rem; }
@@ -545,7 +584,14 @@ th {
     <button onclick="goBack()" class="back-btn">← Back</button>
     <span>Chipso Snaxx Cart 🛒</span>
 </header>
-
+<div class="min-order-alert" id="minOrderAlert">
+    <p>
+        Minimum order price<br>
+        <span class="price">₹150</span><br>
+        Please add more packets!
+    </p>
+    <button onclick="closeMinOrderAlert()">OK</button>
+</div>
 <h2>Your Items</h2>
 
 <div class="table-container">
@@ -640,11 +686,13 @@ function goToOrder(){
     let totalAmount = cart.reduce((sum, item) => sum + (Number(item.price) * Number(item.qty)), 0);
     
     // Minimum Order Price Check (₹150)
-    if (totalAmount < 150) {
-        alert("minimum order price-150rupees");
-        return;
-    }
-
+   if (totalAmount < 150) {
+    alert("minimum order price-150rupees..so add more packets");
+    return;
+}
+function closeMinOrderAlert() {
+    document.getElementById("minOrderAlert").style.display = "none";
+}
     let summary = cart.map(item => `${item.name} x ${item.qty || 1}`).join(", ");
     localStorage.setItem("fullOrderSummary", summary);
     localStorage.setItem("totalOrderAmount", totalAmount);
