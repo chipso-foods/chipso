@@ -353,86 +353,234 @@ Confirm Your Order
 
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-window.onload = function(){
-    let summary = localStorage.getItem("fullOrderSummary");
-    let total = localStorage.getItem("totalOrderAmount");
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-    if(summary && summary.trim() !== ""){
-        document.getElementById("productList").value = summary;
-        document.getElementById("totalDisplay").value = total;
-    } else {
-        alert("Please add items to cart first!");
-        window.location.href = "cart.html";
-    }
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAh10EubxsLMReDKIMDE-tBTmZVQUFlfaM",
+  authDomain: "chipso-foods.firebaseapp.com",
+  projectId: "chipso-foods",
+  storageBucket: "chipso-foods.firebasestorage.app",
+  messagingSenderId: "857491576073",
+  appId: "1:857491576073:web:b35588a84db1d011936fd8",
+  measurementId: "G-HEMT0BJ3TK"
 };
 
-var form = document.getElementById('sheetdb-form');
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  
-  const btn = form.querySelector('.submit-btn');
-  btn.disabled = true;
-  btn.innerText = "Processing...";
+const form = document.getElementById("sheetdb-form");
+const submitBtn = form.querySelector('[type="submit"]');
 
-  let name = document.getElementById("name").value;
-  let phone = document.getElementById("phone").value;
-  let address = document.getElementById("address").value;
-  let products = document.getElementById("productList").value;
-  let total = document.getElementById("totalDisplay").value;
+let activeUser = null;
+let authChecked = false;
+let isSubmitting = false;
 
-  // Order details save cheyyanulla object
-  let newOrder = {
-      orderId: "CHIPSO-" + Math.floor(100000 + Math.random() * 900000),
-      date: new Date().toLocaleDateString('en-GB'),
-      name: name,
-      phone: phone,
-      address: address,
-      products: products,
-      total: total,
-      status: "Order Confirmed"
+submitBtn.disabled = true;
+
+// Load the cart summary
+function loadOrderSummary() {
+  const summary = localStorage.getItem("fullOrderSummary");
+  const total = localStorage.getItem("totalOrderAmount");
+
+  if (!summary || total === null) {
+    alert("Your cart is empty. Please add items first.");
+    window.location.href = "cart.html";
+    return false;
+  }
+
+  document.getElementById("productList").value = summary;
+  document.getElementById("totalDisplay").value = total;
+
+  return true;
+}
+
+// Confirm Firebase login before checkout
+onAuthStateChanged(auth, (user) => {
+  authChecked = true;
+  activeUser = user;
+
+  if (!user) {
+    alert("Order cheyyan aadyam login cheyyanam.");
+    window.location.href = "index.html";
+    return;
+  }
+
+  if (loadOrderSummary()) {
+    submitBtn.disabled = false;
+  }
+});
+
+// Create or reuse a pending order ID.
+// This helps avoid duplicate Firestore orders when retrying.
+function getPendingOrder(orderDetails) {
+  const storageKey = "chipsoPendingOrder";
+
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(storageKey));
+
+    if (
+      saved &&
+      saved.uid === activeUser.uid &&
+      saved.name === orderDetails.name &&
+      saved.phone === orderDetails.phone &&
+      saved.address === orderDetails.address &&
+      saved.products === orderDetails.products &&
+      saved.total === orderDetails.total
+    ) {
+      return saved;
+    }
+  } catch (error) {
+    console.warn("Could not read pending order:", error);
+  }
+
+  const newOrder = {
+    uid: activeUser.uid,
+    orderId: "CHIPSO-" + Date.now().toString(36).toUpperCase(),
+    date: new Date().toLocaleDateString("en-GB"),
+    ...orderDetails,
+    status: "Order Confirmed"
   };
 
-  // LocalStorage-ile 'myOrders' array-ilottu order save cheyyunnu
-  let existingOrders = JSON.parse(localStorage.getItem("myOrders")) || [];
-  existingOrders.unshift(newOrder); // New order aadyam varan
-  localStorage.setItem("myOrders", JSON.stringify(existingOrders));
+  sessionStorage.setItem(storageKey, JSON.stringify(newOrder));
 
-  let ownerWhatsAppNumber = "9744390615";
+  return newOrder;
+}
 
-  fetch(form.action, {
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (!authChecked || !activeUser) {
+    alert("Please login before placing your order.");
+    return;
+  }
+
+  if (isSubmitting) return;
+
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const products = document.getElementById("productList").value.trim();
+  const total = document.getElementById("totalDisplay").value.trim();
+
+  if (!name || !phone || !address || !products || !total) {
+    alert("Please fill in all required details.");
+    return;
+  }
+
+  isSubmitting = true;
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Processing Order...";
+
+  let firestoreSaved = false;
+
+  try {
+    const order = getPendingOrder({
+      name,
+      phone,
+      address,
+      products,
+      total
+    });
+
+    const orderRef = doc(
+      db,
+      "users",
+      activeUser.uid,
+      "orders",
+      order.orderId
+    );
+
+    // If this order was already saved, do not create it again.
+    const existingOrder = await getDoc(orderRef);
+
+    if (!existingOrder.exists()) {
+      await setDoc(orderRef, {
+        orderId: order.orderId,
+        date: order.date,
+        name: order.name,
+        phone: order.phone,
+        address: order.address,
+        products: order.products,
+        total: order.total,
+        status: order.status,
+        createdAt: serverTimestamp()
+      });
+    }
+
+    firestoreSaved = true;
+
+    // Submit the same form data to SheetDB.
+    const response = await fetch(form.action, {
       method: "POST",
-      body: new FormData(form),
-  }).then(response => {
-      if (response.ok) {
-          localStorage.removeItem("cart");
-          localStorage.removeItem("fullOrderSummary");
-          localStorage.removeItem("totalOrderAmount");
+      body: new FormData(form)
+    });
 
-          let message = `*New Order Placed!*\n\n*Name:* ${name}\n*Products:* ${products}\n*Total:* ₹${total}`;
-          let whatsappUrl = `https://wa.me/${ownerWhatsAppNumber}?text=${encodeURIComponent(message)}`;
+    if (!response.ok) {
+      throw new Error("SheetDB submission failed.");
+    }
 
-          window.open(whatsappUrl, '_blank');
+    // Clear cart data after successful submission.
+    localStorage.removeItem("cart");
+    localStorage.removeItem("fullOrderSummary");
+    localStorage.removeItem("totalOrderAmount");
+    sessionStorage.removeItem("chipsoPendingOrder");
 
-          setTimeout(() => {
-              window.location.href = 'thanks.html';
-          }, 500);
-      } else {
-          throw new Error("Form submission failed");
-      }
-  }).catch(error => {
-      alert("Submission failed. Please try again.");
-      btn.disabled = false;
-      btn.innerText = "Confirm Your Order";
-      console.error(error);
-  });
+    // Open WhatsApp with order details.
+    const message =
+      "New Chipso Order%0A" +
+      "Order ID: " + encodeURIComponent(order.orderId) + "%0A" +
+      "Name: " + encodeURIComponent(name) + "%0A" +
+      "Phone: " + encodeURIComponent(phone) + "%0A" +
+      "Address: " + encodeURIComponent(address) + "%0A" +
+      "Products: " + encodeURIComponent(products) + "%0A" +
+      "Total: ₹" + encodeURIComponent(total);
+
+    window.open(
+      "https://wa.me/9744390615?text=" + message,
+      "_blank"
+    );
+
+    window.location.href = "thanks.html";
+
+  } catch (error) {
+    console.error("Order submission error:", error);
+
+    if (firestoreSaved) {
+      alert(
+        "Order account-il save aayittundu, pakshe Google Sheet submission fail aayi. " +
+        "Duplicate order undaakathirikkan support-ne contact cheyyuka."
+      );
+    } else {
+      alert(
+        "Order submit cheyyan kazhinjilla. Internet connection check cheythu retry cheyyuka."
+      );
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Confirm Your Order";
+    isSubmitting = false;
+  }
 });
 </script>
 
+
 <footer>
-&copy; 2026 Chipso Snaxx. Premium Quality Kerala Snacks.
+&copy;  Chipso Foods. Premium Quality Kerala Snacks.
 </footer>
 
 </body>
