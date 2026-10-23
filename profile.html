@@ -1,1404 +1,1415 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#fff7ed">
-  <title>My Profile | Chipso Foods</title>
-
-  <link rel="icon" type="image/png" href="logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
-
-  <style>
-    :root {
-      --orange: #ea580c;
-      --orange-dark: #c2410c;
-      --orange-light: #fff0e3;
-      --cream: #fffaf3;
-      --white: #ffffff;
-      --navy: #172033;
-      --text: #263247;
-      --muted: #778195;
-      --border: #f1e5d8;
-      --green: #15803d;
-      --green-bg: #dcfce7;
-      --shadow: 0 14px 40px rgba(89, 52, 20, .07);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 28px 18px 100px;
-      font-family: 'Outfit', sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 8% 0%, #ffead7 0, transparent 28%),
-        linear-gradient(180deg, #fffaf3, #fffdf9 55%, #fff7ed);
-    }
-
-    button, a {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    button:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
-
-    .page {
-      width: 100%;
-      max-width: 1050px;
-      margin: 0 auto;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 26px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .brand-logo {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-      border-radius: 14px;
-      background: white;
-      padding: 4px;
-      box-shadow: 0 5px 15px #ea580c16;
-    }
-
-    .brand-name {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1.35rem;
-      color: var(--orange-dark);
-      line-height: 1.1;
-    }
-
-    .brand-subtitle {
-      font-size: .78rem;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    .home-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 11px 15px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: white;
-      color: var(--navy);
-      text-decoration: none;
-      font-size: .88rem;
-      font-weight: 700;
-      transition: .2s;
-    }
-
-    .home-btn:hover {
-      border-color: var(--orange);
-      color: var(--orange);
-      transform: translateY(-1px);
-    }
-
-    .welcome {
-      margin-bottom: 22px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      color: var(--orange-dark);
-      background: #ffeddc;
-      padding: 7px 11px;
-      border-radius: 30px;
-      font-size: .75rem;
-      font-weight: 800;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-
-    .welcome h1 {
-      margin: 12px 0 5px;
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      line-height: 1.12;
-      letter-spacing: -.04em;
-      color: var(--navy);
-    }
-
-    .welcome p {
-      margin: 0;
-      color: var(--muted);
-      font-size: .96rem;
-    }
-
-    .dashboard {
-      display: grid;
-      grid-template-columns: 320px minmax(0, 1fr);
-      gap: 22px;
-      align-items: start;
-    }
-
-    .panel {
-      background: rgba(255, 255, 255, .94);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .profile-panel {
-      position: relative;
-    }
-
-    .profile-cover {
-      height: 105px;
-      background:
-        radial-gradient(circle at 85% 15%, #ffffff75 0 30px, transparent 31px),
-        radial-gradient(circle at 15% 95%, #ffffff55 0 45px, transparent 46px),
-        linear-gradient(125deg, #fb923c, #ea580c 65%, #c2410c);
-    }
-
-    .profile-content {
-      padding: 0 22px 23px;
-      text-align: center;
-    }
-
-    .avatar-wrap {
-      width: 96px;
-      height: 96px;
-      margin: -48px auto 12px;
-      position: relative;
-      border: 5px solid white;
-      border-radius: 50%;
-      background: #fff0e3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      box-shadow: 0 5px 20px #7c2d1218;
-    }
-
-    .avatar-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .avatar-placeholder {
-      font-size: 2.8rem;
-      color: var(--orange);
-    }
-
-    .profile-name {
-      margin: 0;
-      color: var(--navy);
-      font-size: 1.35rem;
-      font-weight: 800;
-      overflow-wrap: anywhere;
-    }
-
-    .profile-email {
-      color: var(--muted);
-      font-size: .86rem;
-      margin: 6px 0 13px;
-      overflow-wrap: anywhere;
-    }
-
-    .account-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: 30px;
-      background: var(--green-bg);
-      color: var(--green);
-      font-size: .75rem;
-      font-weight: 800;
-    }
-
-    .account-details {
-      text-align: left;
-      margin-top: 22px;
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
-    }
-
-    .section-mini-title {
-      color: var(--navy);
-      font-size: .9rem;
-      font-weight: 800;
-      margin: 0 0 14px;
-    }
-
-    .detail-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 11px;
-      margin-bottom: 15px;
-    }
-
-    .detail-icon {
-      flex: 0 0 36px;
-      width: 36px;
-      height: 36px;
-      display: grid;
-      place-items: center;
-      border-radius: 12px;
-      color: var(--orange);
-      background: var(--orange-light);
-    }
-
-    .detail-copy {
-      min-width: 0;
-      padding-top: 2px;
-    }
-
-    .detail-label {
-      display: block;
-      color: var(--muted);
-      font-size: .74rem;
-      margin-bottom: 3px;
-    }
-
-    .detail-value {
-      display: block;
-      color: var(--text);
-      font-size: .88rem;
-      font-weight: 600;
-      overflow-wrap: anywhere;
-    }
-
-    .account-actions {
-      display: grid;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .btn {
-      min-height: 45px;
-      border: 0;
-      border-radius: 13px;
-      padding: 11px 15px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: .88rem;
-      font-weight: 800;
-      transition: transform .2s, background .2s;
-    }
-
-    .btn:hover:not(:disabled) {
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #fb923c, #ea580c);
-      color: white;
-      box-shadow: 0 6px 15px #ea580c26;
-    }
-
-    .btn-primary:hover:not(:disabled) {
-      background: linear-gradient(135deg, #f97316, #c2410c);
-    }
-
-    .btn-outline {
-      background: white;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
-    .btn-danger {
-      background: #fff1f2;
-      color: #be123c;
-      border: 1px solid #ffe0e5;
-    }
-
-    .orders-panel {
-      padding: 23px;
-      min-width: 0;
-    }
-
-    .orders-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 14px;
-      margin-bottom: 18px;
-    }
-
-    .orders-heading h2 {
-      margin: 0;
-      font-size: 1.35rem;
-      color: var(--navy);
-      letter-spacing: -.025em;
-    }
-
-    .orders-heading p {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: .84rem;
-    }
-
-    .refresh-btn {
-      flex-shrink: 0;
-      min-height: 40px;
-      padding: 9px 12px;
-      font-size: .8rem;
-    }
-
-    .order-summary {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .summary-box {
-      padding: 15px;
-      border-radius: 16px;
-      border: 1px solid #f8e3d0;
-      background: linear-gradient(145deg, #fff8ef, #fffdf9);
-      min-width: 0;
-    }
-
-    .summary-label {
-      display: block;
-      font-size: .77rem;
-      color: var(--muted);
-      margin-bottom: 7px;
-    }
-
-    .summary-value {
-      display: block;
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--navy);
-      overflow-wrap: anywhere;
-    }
-
-    .orders-list {
-      display: grid;
-      gap: 14px;
-    }
-
-    .order-card {
-      min-width: 0;
-      border: 1px solid var(--border);
-      background: white;
-      border-radius: 18px;
-      padding: 17px;
-      transition: box-shadow .2s, border-color .2s;
-    }
-
-    .order-card:hover {
-      border-color: #f7c9a7;
-      box-shadow: 0 8px 25px #9a34120b;
-    }
-
-    .order-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-      padding-bottom: 13px;
-      border-bottom: 1px dashed var(--border);
-    }
-
-    .order-id {
-      color: var(--orange-dark);
-      font-size: .9rem;
-      font-weight: 800;
-      overflow-wrap: anywhere;
-    }
-
-    .order-date {
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: .77rem;
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 6px 9px;
-      border-radius: 30px;
-      background: #fff0df;
-      color: #9a3412;
-      font-size: .72rem;
-      font-weight: 800;
-      text-align: center;
-      overflow-wrap: anywhere;
-    }
-
-    .status-pill.delivered {
-      color: #166534;
-      background: #dcfce7;
-    }
-
-    .status-pill.cancelled {
-      color: #9f1239;
-      background: #ffe4e6;
-    }
-
-    .order-products {
-      padding: 13px 0;
-    }
-
-    .order-products-title {
-      font-size: .76rem;
-      color: var(--muted);
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .order-products-text {
-      margin: 0;
-      color: var(--text);
-      font-size: .9rem;
-      line-height: 1.55;
-      white-space: pre-line;
-      overflow-wrap: anywhere;
-    }
-
-    .order-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding-top: 12px;
-      border-top: 1px solid #f5eee7;
-    }
-
-    .total-label {
-      display: block;
-      color: var(--muted);
-      font-size: .75rem;
-      margin-bottom: 3px;
-    }
-
-    .total-value {
-      color: var(--navy);
-      font-size: 1.12rem;
-      font-weight: 800;
-    }
-
-    .tracking {
-      margin-top: 16px;
-      padding: 13px;
-      background: #fffbf6;
-      border: 1px solid #f7eadc;
-      border-radius: 13px;
-    }
-
-    .tracking-title {
-      font-size: .78rem;
-      font-weight: 800;
-      color: var(--navy);
-      margin-bottom: 11px;
-    }
-
-    .tracking-track {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 5px;
-    }
-
-    .tracking-step {
-      text-align: center;
-      min-width: 0;
-      color: #9ca3af;
-      font-size: .67rem;
-      font-weight: 600;
-    }
-
-    .tracking-dot {
-      width: 20px;
-      height: 20px;
-      margin: 0 auto 6px;
-      border-radius: 50%;
-      background: #e5e7eb;
-      color: #6b7280;
-      display: grid;
-      place-items: center;
-      font-size: .7rem;
-    }
-
-    .tracking-step.done {
-      color: var(--green);
-    }
-
-    .tracking-step.done .tracking-dot {
-      background: #dcfce7;
-      color: var(--green);
-    }
-
-    .tracking-step.current {
-      color: var(--orange-dark);
-      font-weight: 800;
-    }
-
-    .tracking-step.current .tracking-dot {
-      background: var(--orange);
-      color: white;
-      box-shadow: 0 0 0 4px #ffedd5;
-    }
-
-    .tracking-note {
-      margin: 10px 0 0;
-      font-size: .72rem;
-      color: var(--muted);
-      line-height: 1.45;
-    }
-
-    .state-box {
-      text-align: center;
-      padding: 38px 16px;
-      border: 1px dashed #f2d6c1;
-      background: #fffbf6;
-      border-radius: 17px;
-    }
-
-    .state-icon {
-      width: 54px;
-      height: 54px;
-      margin: 0 auto 12px;
-      display: grid;
-      place-items: center;
-      border-radius: 18px;
-      background: var(--orange-light);
-      color: var(--orange);
-    }
-
-    .state-box h3 {
-      margin: 0 0 7px;
-      font-size: 1rem;
-      color: var(--navy);
-    }
-
-    .state-box p {
-      margin: 0 auto 15px;
-      max-width: 300px;
-      color: var(--muted);
-      font-size: .85rem;
-      line-height: 1.5;
-    }
-
-    .footer-note {
-      text-align: center;
-      margin-top: 23px;
-      color: var(--muted);
-      font-size: .78rem;
-    }
-
-    #navbar {
-      display: none;
-    }
-
-    @media (max-width: 760px) {
-      body {
-        padding: 18px 14px 100px;
-      }
-
-      .dashboard {
-        grid-template-columns: 1fr;
-      }
-
-      .profile-panel {
-        display: grid;
-        grid-template-columns: 1fr;
-      }
-
-      .profile-content {
-        padding-left: 20px;
-        padding-right: 20px;
-      }
-
-      .account-details {
-        max-width: 440px;
-        margin-left: auto;
-        margin-right: auto;
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fff7ed">
+    <title>My Profile | Chipso Foods</title>
+
+    <link rel="icon" type="image/png" href="logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
+
+    <style>
+        :root {
+        --orange: #ea580c;
+        --orange-dark: #c2410c;
+        --orange-light: #fff0e3;
+        --cream: #fffaf3;
+        --white: #ffffff;
+        --navy: #172033;
+        --text: #263247;
+        --muted: #778195;
+        --border: #f1e5d8;
+        --green: #15803d;
+        --green-bg: #dcfce7;
+        --shadow: 0 14px 40px rgba(89, 52, 20, .07);
+        }
+
+        * {
+        box-sizing: border-box;
+        }
+
+        body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 28px 18px 100px;
+        font-family: 'Outfit', sans-serif;
+        color: var(--text);
+        background:
+            radial-gradient(circle at 8% 0%, #ffead7 0, transparent 28%),
+            linear-gradient(180deg, #fffaf3, #fffdf9 55%, #fff7ed);
+        }
+
+        button, a {
+        font: inherit;
+        }
+
+        button {
+        cursor: pointer;
+        }
+
+        button:disabled {
+        opacity: .6;
+        cursor: not-allowed;
+        }
+
+        .page {
         width: 100%;
-      }
+        max-width: 1050px;
+        margin: 0 auto;
+        }
 
-      .account-actions {
-        max-width: 440px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .orders-panel {
-        padding: 18px;
-      }
-
-      #navbar {
+        .topbar {
         display: flex;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        justify-content: space-around;
         align-items: center;
-        padding: 9px 5px calc(9px + env(safe-area-inset-bottom));
-        background: #172033;
-        border-top: 1px solid #ffffff20;
-        box-shadow: 0 -5px 25px #17203320;
-      }
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 26px;
+        }
 
-      #navbar a {
-        color: #e5e7eb;
-        text-decoration: none;
+        .brand {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        gap: 3px;
-        padding: 7px 12px;
-        border-radius: 13px;
-        font-size: .69rem;
-        font-weight: 700;
-      }
+        gap: 12px;
+        min-width: 0;
+        }
 
-      #navbar a .material-symbols-rounded {
-        font-size: 21px;
-      }
+        .brand-logo {
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+        border-radius: 14px;
+        background: white;
+        padding: 4px;
+        box-shadow: 0 5px 15px #ea580c16;
+        }
 
-      #navbar a.active {
-        color: white;
-        background: linear-gradient(135deg, #fb923c, #ea580c);
-      }
-    }
+        .brand-name {
+        font-family: 'Fredoka', sans-serif;
+        font-size: 1.35rem;
+        color: var(--orange-dark);
+        line-height: 1.1;
+        }
 
-    @media (max-width: 420px) {
-      .topbar {
-        align-items: flex-start;
-      }
-
-      .brand-logo {
-        width: 42px;
-        height: 42px;
-      }
-
-      .brand-name {
-        font-size: 1.15rem;
-      }
-
-      .home-btn {
-        padding: 9px;
+        .brand-subtitle {
         font-size: .78rem;
-      }
+        color: var(--muted);
+        margin-top: 4px;
+        }
 
-      .orders-heading {
+        .home-btn {
+            display: inline;
+        display: inline-flex;
         align-items: center;
-      }
+        gap: 7px;
+        padding: 11px 15px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: white;
+        color: var(--navy);
+        text-decoration: none;
+        font-size: .88rem;
+        font-weight: 700;
+        transition: .2s;
+        }
 
-      .orders-heading h2 {
-        font-size: 1.18rem;
-      }
+        .home-btn:hover {
+        border-color: var(--orange);
+        color: var(--orange);
+        transform: translateY(-1px);
+        }
 
-      .refresh-btn {
-        padding: 8px 9px;
+        .welcome {
+        margin-bottom: 22px;
+        }
+
+        .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: var(--orange-dark);
+        background: #ffeddc;
+        padding: 7px 11px;
+        border-radius: 30px;
+        font-size: .75rem;
+        font-weight: 800;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        }
+
+        .welcome h1 {
+        margin: 12px 0 5px;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        line-height: 1.12;
+        letter-spacing: -.04em;
+        color: var(--navy);
+        }
+
+        .welcome p {
+        margin: 0;
+        color: var(--muted);
+        font-size: .96rem;
+        }
+
+        .dashboard {
+        display: grid;
+        grid-template-columns: 320px minmax(0, 1fr);
+        gap: 22px;
+        align-items: start;
+        }
+
+        .panel {
+        background: rgba(255, 255, 255, .94);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        }
+
+        .profile-panel {
+        position: relative;
+        }
+
+        .profile-cover {
+        height: 105px;
+        background:
+            radial-gradient(circle at 85% 15%, #ffffff75 0 30px, transparent 31px),
+            radial-gradient(circle at 15% 95%, #ffffff55 0 45px, transparent 46px),
+            linear-gradient(125deg, #fb923c, #ea580c 65%, #c2410c);
+        }
+
+        .profile-content {
+        padding: 0 22px 23px;
+        text-align: center;
+        }
+
+        .avatar-wrap {
+        width: 96px;
+        height: 96px;
+        margin: -48px auto 12px;
+        position: relative;
+        border: 5px solid white;
+        border-radius: 50%;
+        background: #fff0e3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        box-shadow: 0 5px 20px #7c2d1218;
+        }
+
+        .avatar-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        }
+
+        .avatar-placeholder {
+        font-size: 2.8rem;
+        color: var(--orange);
+        }
+
+        .profile-name {
+        margin: 0;
+        color: var(--navy);
+        font-size: 1.35rem;
+        font-weight: 800;
+        overflow-wrap: anywhere;
+        }
+
+        .profile-email {
+        color: var(--muted);
+        font-size: .86rem;
+        margin: 6px 0 13px;
+        overflow-wrap: anywhere;
+        }
+
+        .account-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 30px;
+        background: var(--green-bg);
+        color: var(--green);
+        font-size: .75rem;
+        font-weight: 800;
+        }
+
+        .account-details {
+        text-align: left;
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+        }
+
+        .section-mini-title {
+        color: var(--navy);
+        font-size: .9rem;
+        font-weight: 800;
+        margin: 0 0 14px;
+        }
+
+        .detail-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 11px;
+        margin-bottom: 15px;
+        }
+
+        .detail-icon {
+        flex: 0 0 36px;
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        color: var(--orange);
+        background: var(--orange-light);
+        }
+
+        .detail-copy {
+        min-width: 0;
+        padding-top: 2px;
+        }
+
+        .detail-label {
+        display: block;
+        color: var(--muted);
         font-size: .74rem;
-      }
+        margin-bottom: 3px;
+        }
 
-      .order-card {
+        .detail-value {
+        display: block;
+        color: var(--text);
+        font-size: .88rem;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+        }
+
+        .account-actions {
+        display: grid;
+        gap: 10px;
+        margin-top: 20px;
+        }
+
+        .btn {
+        min-height: 45px;
+        border: 0;
+        border-radius: 13px;
+        padding: 11px 15px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: .88rem;
+        font-weight: 800;
+        transition: transform .2s, background .2s;
+        }
+
+        .btn:hover:not(:disabled) {
+        transform: translateY(-1px);
+        }
+
+        .btn-primary {
+        background: linear-gradient(135deg, #fb923c, #ea580c);
+        color: white;
+        box-shadow: 0 6px 15px #ea580c26;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+        background: linear-gradient(135deg, #f97316, #c2410c);
+        }
+
+        .btn-outline {
+        background: white;
+        color: var(--text);
+        border: 1px solid var(--border);
+        }
+
+        .btn-danger {
+        background: #fff1f2;
+        color: #be123c;
+        border: 1px solid #ffe0e5;
+        }
+
+        .orders-panel {
+        padding: 23px;
+        min-width: 0;
+        }
+
+        .orders-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 18px;
+        }
+
+        .orders-heading h2 {
+        margin: 0;
+        font-size: 1.35rem;
+        color: var(--navy);
+        letter-spacing: -.025em;
+        }
+
+        .orders-heading p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: .84rem;
+        }
+
+        .refresh-btn {
+        flex-shrink: 0;
+        min-height: 40px;
+        padding: 9px 12px;
+        font-size: .8rem;
+        }
+
+        .order-summary {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 20px;
+        }
+
+        .summary-box {
+        padding: 15px;
+        border-radius: 16px;
+        border: 1px solid #f8e3d0;
+        background: linear-gradient(145deg, #fff8ef, #fffdf9);
+        min-width: 0;
+        }
+
+        .summary-label {
+        display: block;
+        font-size: .77rem;
+        color: var(--muted);
+        margin-bottom: 7px;
+        }
+
+        .summary-value {
+        display: block;
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: var(--navy);
+        overflow-wrap: anywhere;
+        }
+
+        .orders-list {
+        display: grid;
+        gap: 14px;
+        }
+
+        .order-card {
+        min-width: 0;
+        border: 1px solid var(--border);
+        background: white;
+        border-radius: 18px;
+        padding: 17px;
+        transition: box-shadow .2s, border-color .2s;
+        }
+
+        .order-card:hover {
+        border-color: #f7c9a7;
+        box-shadow: 0 8px 25px #9a34120b;
+        }
+
+        .order-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        padding-bottom: 13px;
+        border-bottom: 1px dashed var(--border);
+        }
+
+        .order-id {
+        color: var(--orange-dark);
+        font-size: .9rem;
+        font-weight: 800;
+        overflow-wrap: anywhere;
+        }
+
+        .order-date {
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: .77rem;
+        }
+
+        .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 9px;
+        border-radius: 30px;
+        background: #fff0df;
+        color: #9a3412;
+        font-size: .72rem;
+        font-weight: 800;
+        text-align: center;
+        overflow-wrap: anywhere;
+        }
+
+        .status-pill.delivered {
+        color: #166534;
+        background: #dcfce7;
+        }
+
+        .status-pill.cancelled {
+        color: #9f1239;
+        background: #ffe4e6;
+        }
+
+        .order-products {
+        padding: 13px 0;
+        }
+
+        .order-products-title {
+        font-size: .76rem;
+        color: var(--muted);
+        margin-bottom: 6px;
+        font-weight: 600;
+        }
+
+        .order-products-text {
+        margin: 0;
+        color: var(--text);
+        font-size: .9rem;
+        line-height: 1.55;
+        white-space: pre-line;
+        overflow-wrap: anywhere;
+        }
+
+        .order-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding-top: 12px;
+        border-top: 1px solid #f5eee7;
+        }
+
+        .total-label {
+        display: block;
+        color: var(--muted);
+        font-size: .75rem;
+        margin-bottom: 3px;
+        }
+
+        .total-value {
+        color: var(--navy);
+        font-size: 1.12rem;
+        font-weight: 800;
+        }
+
+        .tracking {
+        margin-top: 16px;
         padding: 13px;
-      }
-
-      .order-top {
-        flex-direction: column;
-        gap: 9px;
-      }
-
-      .order-bottom {
-        align-items: flex-end;
-      }
-
-      .tracking-step {
-        font-size: .6rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        transition: none !important;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <main class="page">
-    <header class="topbar">
-      <div class="brand">
-        <img src="logo.png" class="brand-logo" alt="Chipso Foods logo">
-        <div>
-          <div class="brand-name">Chipso Foods</div>
-          <div class="brand-subtitle">Your account, your orders</div>
-        </div>
-      </div>
-
-      <a class="home-btn" href="index.html">
-        <span class="material-symbols-rounded">home</span>
-        Home
-      </a>
-    </header>
-
-    <section class="welcome">
-      <span class="eyebrow">
-        <span class="material-symbols-rounded">person_check</span>
-        My Account
-      </span>
-      <h1>Welcome back!</h1>
-      <p>Manage your account and keep track of your Chipso orders.</p>
-    </section>
-
-    <div class="dashboard">
-      <section class="panel profile-panel">
-        <div class="profile-cover"></div>
-
-        <div class="profile-content">
-          <div class="avatar-wrap">
-            <span id="defaultGuestIcon" class="material-symbols-rounded avatar-placeholder">account_circle</span>
-            <img id="userAvatarImg" src="" alt="Profile photo" style="display:none">
-          </div>
-
-          <h2 class="profile-name" id="userNameText">Loading profile...</h2>
-          <p class="profile-email" id="userEmailText">Checking account...</p>
-
-          <span class="account-badge" id="accountBadge">
-            <span class="material-symbols-rounded">sync</span>
-            Checking account
-          </span>
-
-          <div class="account-details">
-            <h3 class="section-mini-title">Account details</h3>
-
-            <div class="detail-row">
-              <div class="detail-icon">
-                <span class="material-symbols-rounded">person</span>
-              </div>
-              <div class="detail-copy">
-                <span class="detail-label">Full name</span>
-                <span class="detail-value" id="detailName">Loading...</span>
-              </div>
-            </div>
-
-            <div class="detail-row">
-              <div class="detail-icon">
-                <span class="material-symbols-rounded">mail</span>
-              </div>
-              <div class="detail-copy">
-                <span class="detail-label">Email address</span>
-                <span class="detail-value" id="detailEmail">Loading...</span>
-              </div>
-            </div>
-
-            <div class="detail-row">
-              <div class="detail-icon">
-                <span class="material-symbols-rounded">verified_user</span>
-              </div>
-              <div class="detail-copy">
-                <span class="detail-label">Sign-in provider</span>
-                <span class="detail-value" id="detailProvider">Checking...</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="account-actions">
-            <button class="btn btn-outline" id="refreshProfileBtn" type="button">
-              <span class="material-symbols-rounded">refresh</span>
-              Refresh orders
-            </button>
-
-            <button class="btn btn-danger" id="authBtn" type="button">
-              <span class="material-symbols-rounded">logout</span>
-              Logout
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel orders-panel">
-        <div class="orders-heading">
-          <div>
-            <h2>My Orders <span aria-hidden="true">📦</span></h2>
-            <p>Your order history and current status.</p>
-          </div>
-
-          <button class="btn btn-outline refresh-btn" id="refreshOrdersBtn" type="button">
-            <span class="material-symbols-rounded">refresh</span>
-            Refresh
-          </button>
-        </div>
-
-        <div class="order-summary">
-          <div class="summary-box">
-            <span class="summary-label">Total orders</span>
-            <strong class="summary-value" id="totalOrders">—</strong>
-          </div>
-
-          <div class="summary-box">
-            <span class="summary-label">Total order value</span>
-            <strong class="summary-value" id="totalSpent">—</strong>
-          </div>
-        </div>
-
-        <div class="orders-list" id="ordersContainer" aria-live="polite">
-          <div class="state-box">
-            <div class="state-icon">
-              <span class="material-symbols-rounded">hourglass_top</span>
-            </div>
-            <h3>Loading your orders</h3>
-            <p>Please wait while we retrieve your order history.</p>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <div class="footer-note">
-      Made with care by Chipso Foods 🧡
-    </div>
-  </main>
-
-  <nav id="navbar" aria-label="Main navigation">
-    <a href="index.html">
-      <span class="material-symbols-rounded">home</span>
-      <span>Home</span>
-    </a>
-    <a href="index.html#products">
-      <span class="material-symbols-rounded">inventory_2</span>
-      <span>Products</span>
-    </a>
-    <a href="index.html#contact">
-      <span class="material-symbols-rounded">call</span>
-      <span>Contact</span>
-    </a>
-    <a href="cart.html">
-      <span class="material-symbols-rounded">shopping_cart</span>
-      <span>Cart</span>
-    </a>
-  </nav>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
-    import {
-      getFirestore,
-      collection,
-      getDocs,
-      query,
-      orderBy
-    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAh10EubxsLMReDKIMDE-tBTmZVQUFlfaM",
-      authDomain: "chipso-foods.firebaseapp.com",
-      projectId: "chipso-foods",
-      storageBucket: "chipso-foods.firebasestorage.app",
-      messagingSenderId: "857491576073",
-      appId: "1:857491576073:web:b35588a84db1d011936fd8",
-      measurementId: "G-HEMT0BJ3TK"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const ordersContainer = document.getElementById("ordersContainer");
-    const authBtn = document.getElementById("authBtn");
-    const refreshOrdersBtn = document.getElementById("refreshOrdersBtn");
-    const refreshProfileBtn = document.getElementById("refreshProfileBtn");
-
-    let activeUser = null;
-    let loadingOrders = false;
-    let authReady = false;
-
-    function stateBox(icon, title, message, actionLabel, action) {
-      const box = document.createElement("div");
-      box.className = "state-box";
-
-      const iconWrap = document.createElement("div");
-      iconWrap.className = "state-icon";
-
-      const iconElement = document.createElement("span");
-      iconElement.className = "material-symbols-rounded";
-      iconElement.textContent = icon;
-      iconWrap.appendChild(iconElement);
-
-      const heading = document.createElement("h3");
-      heading.textContent = title;
-
-      const paragraph = document.createElement("p");
-      paragraph.textContent = message;
-
-      box.append(iconWrap, heading, paragraph);
-
-      if (actionLabel && action) {
-        const button = document.createElement("button");
-        button.className = "btn btn-primary";
-        button.type = "button";
-        button.textContent = actionLabel;
-        button.addEventListener("click", action);
-        box.appendChild(button);
-      }
-
-      return box;
-    }
-
-    function setButtonLoading(button, loading, label) {
-      button.disabled = loading;
-      button.setAttribute("aria-busy", String(loading));
-
-      if (loading) {
-        button.dataset.originalText = button.textContent.trim();
-        button.textContent = label;
-      } else {
-        button.textContent = button.dataset.originalText || label;
-      }
-    }
-
-    function showGuestProfile() {
-      document.getElementById("userNameText").textContent = "Guest User";
-      document.getElementById("userEmailText").textContent = "Not logged in";
-      document.getElementById("detailName").textContent = "—";
-      document.getElementById("detailEmail").textContent = "—";
-      document.getElementById("detailProvider").textContent = "—";
-
-      document.getElementById("userAvatarImg").style.display = "none";
-      document.getElementById("defaultGuestIcon").style.display = "block";
-
-      const badge = document.getElementById("accountBadge");
-      badge.replaceChildren();
-
-      const badgeIcon = document.createElement("span");
-      badgeIcon.className = "material-symbols-rounded";
-      badgeIcon.textContent = "person";
-      badge.append(badgeIcon, document.createTextNode("Guest"));
-
-      authBtn.replaceChildren();
-      const loginIcon = document.createElement("span");
-      loginIcon.className = "material-symbols-rounded";
-      loginIcon.textContent = "login";
-      authBtn.append(loginIcon, document.createTextNode("Login"));
-
-      document.getElementById("totalOrders").textContent = "0";
-      document.getElementById("totalSpent").textContent = "₹0";
-
-      ordersContainer.replaceChildren();
-      ordersContainer.appendChild(
-        stateBox(
-          "lock",
-          "Login to view your orders",
-          "Sign in to your Chipso account to access your personal order history.",
-          "Go to Login",
-          () => window.location.href = "m.html"
-        )
-      );
-
-      refreshOrdersBtn.disabled = true;
-      refreshProfileBtn.disabled = true;
-    }
-
-    function showLoggedInProfile(user) {
-      const name = user.displayName || user.email?.split("@")[0] || "Chipso User";
-
-      document.getElementById("userNameText").textContent = name;
-      document.getElementById("userEmailText").textContent = user.email || "Email unavailable";
-      document.getElementById("detailName").textContent = name;
-      document.getElementById("detailEmail").textContent = user.email || "—";
-
-      const provider = user.providerData?.map(item => item.providerId) || [];
-      let providerText = "Firebase account";
-
-      if (provider.includes("google.com")) {
-        providerText = "Google";
-      } else if (provider.includes("password")) {
-        providerText = "Email & Password";
-      } else if (provider.length) {
-        providerText = provider.join(", ");
-      }
-
-      document.getElementById("detailProvider").textContent = providerText;
-
-      const avatar = document.getElementById("userAvatarImg");
-      const placeholder = document.getElementById("defaultGuestIcon");
-
-      if (user.photoURL) {
-        avatar.src = user.photoURL;
-        avatar.style.display = "block";
-        placeholder.style.display = "none";
-      } else {
-        avatar.removeAttribute("src");
-        avatar.style.display = "none";
-        placeholder.style.display = "block";
-      }
-
-      const badge = document.getElementById("accountBadge");
-      badge.replaceChildren();
-
-      const checkIcon = document.createElement("span");
-      checkIcon.className = "material-symbols-rounded";
-      checkIcon.textContent = "verified";
-      badge.append(checkIcon, document.createTextNode("Signed in"));
-
-      refreshOrdersBtn.disabled = false;
-      refreshProfileBtn.disabled = false;
-
-      authBtn.replaceChildren();
-      const logoutIcon = document.createElement("span");
-      logoutIcon.className = "material-symbols-rounded";
-      logoutIcon.textContent = "logout";
-      authBtn.append(logoutIcon, document.createTextNode("Logout"));
-    }
-
-    function getStatusInfo(statusValue) {
-      const status = String(statusValue || "Order Confirmed").trim();
-      const normal = status.toLowerCase();
-
-      if (normal.includes("cancel")) {
-        return { label: status, kind: "cancelled", stage: -1 };
-      }
-
-      if (normal.includes("deliver")) {
-        return { label: status, kind: "delivered", stage: 3 };
-      }
-
-      if (normal.includes("out for delivery")) {
-        return { label: status, kind: "normal", stage: 2 };
-      }
-
-      if (normal.includes("ship") || normal.includes("dispatch")) {
-        return { label: status, kind: "normal", stage: 2 };
-      }
-
-      if (normal.includes("process") || normal.includes("prepar")) {
-        return { label: status, kind: "normal", stage: 1 };
-      }
-
-      return { label: status, kind: "normal", stage: 0 };
-    }
-
-    function makeTracking(statusInfo) {
-      const wrapper = document.createElement("div");
-      wrapper.className = "tracking";
-
-      const title = document.createElement("div");
-      title.className = "tracking-title";
-      title.textContent = statusInfo.kind === "cancelled"
-        ? "Order status"
-        : "Order progress";
-
-      wrapper.appendChild(title);
-
-      if (statusInfo.kind === "cancelled") {
-        const note = document.createElement("p");
-        note.className = "tracking-note";
-        note.textContent = "This order is marked as cancelled.";
-        wrapper.appendChild(note);
-        return wrapper;
-      }
-
-      const steps = [
-        { label: "Placed", icon: "check" },
-        { label: "Processing", icon: "inventory_2" },
-        { label: "On the way", icon: "local_shipping" },
-        { label: "Delivered", icon: "done_all" }
-      ];
-
-      const track = document.createElement("div");
-      track.className = "tracking-track";
-
-      steps.forEach((step, index) => {
-        const item = document.createElement("div");
-        item.className = "tracking-step";
-
-        if (index < statusInfo.stage) {
-          item.classList.add("done");
-        } else if (index === statusInfo.stage) {
-          item.classList.add("current");
+        background: #fffbf6;
+        border: 1px solid #f7eadc;
+        border-radius: 13px;
         }
 
-        const dot = document.createElement("div");
-        dot.className = "tracking-dot";
-        dot.textContent = index < statusInfo.stage ? "✓" : String(index + 1);
-
-        const label = document.createElement("div");
-        label.textContent = step.label;
-
-        item.append(dot, label);
-        track.appendChild(item);
-      });
-
-      wrapper.appendChild(track);
-
-      const note = document.createElement("p");
-      note.className = "tracking-note";
-      note.textContent =
-        "Progress is estimated from the saved order status. Live courier tracking is not connected.";
-      wrapper.appendChild(note);
-
-      return wrapper;
-    }
-
-    function renderOrder(order) {
-      const card = document.createElement("article");
-      card.className = "order-card";
-
-      const top = document.createElement("div");
-      top.className = "order-top";
-
-      const identity = document.createElement("div");
-
-      const id = document.createElement("div");
-      id.className = "order-id";
-      id.textContent = order.orderId || "CHIPSO-ORDER";
-
-      const date = document.createElement("div");
-      date.className = "order-date";
-      date.textContent = order.date || "Date unavailable";
-
-      identity.append(id, date);
-
-      const statusInfo = getStatusInfo(order.status);
-      const pill = document.createElement("span");
-      pill.className = "status-pill";
-
-      if (statusInfo.kind === "delivered") {
-        pill.classList.add("delivered");
-      } else if (statusInfo.kind === "cancelled") {
-        pill.classList.add("cancelled");
-      }
-
-      pill.textContent = statusInfo.label;
-
-      top.append(identity, pill);
-      card.appendChild(top);
-
-      const products = document.createElement("div");
-      products.className = "order-products";
-
-      const productsTitle = document.createElement("div");
-      productsTitle.className = "order-products-title";
-      productsTitle.textContent = "Items in your order";
-
-      const productsText = document.createElement("p");
-      productsText.className = "order-products-text";
-      productsText.textContent = order.products || "Product details unavailable";
-
-      products.append(productsTitle, productsText);
-      card.appendChild(products);
-
-      const bottom = document.createElement("div");
-      bottom.className = "order-bottom";
-
-      const totalGroup = document.createElement("div");
-
-      const totalLabel = document.createElement("span");
-      totalLabel.className = "total-label";
-      totalLabel.textContent = "Order total";
-
-      const totalValue = document.createElement("span");
-      totalValue.className = "total-value";
-      totalValue.textContent = "₹" + (order.total ?? "0");
-
-      totalGroup.append(totalLabel, totalValue);
-      bottom.appendChild(totalGroup);
-      card.appendChild(bottom);
-
-      card.appendChild(makeTracking(statusInfo));
-
-      return card;
-    }
-
-    async function loadUserOrders() {
-      const user = auth.currentUser;
-
-      if (!user) {
-        showGuestProfile();
-        return;
-      }
-
-      if (loadingOrders) return;
-
-      loadingOrders = true;
-      setButtonLoading(refreshOrdersBtn, true, "Loading...");
-      setButtonLoading(refreshProfileBtn, true, "Loading...");
-
-      ordersContainer.replaceChildren();
-      ordersContainer.appendChild(
-        stateBox(
-          "hourglass_top",
-          "Loading your orders",
-          "Please wait while we retrieve your order history."
-        )
-      );
-
-      try {
-        const ordersRef = collection(db, "users", user.uid, "orders");
-        const ordersQuery = query(ordersRef, orderBy("createdAt", "desc"));
-        const snapshot = await getDocs(ordersQuery);
-
-        // Do not show one user's data after an account switch.
-        if (auth.currentUser?.uid !== user.uid) return;
-
-        const orders = snapshot.docs.map(orderDoc => ({
-          ...orderDoc.data(),
-          _documentId: orderDoc.id
-        }));
-
-        document.getElementById("totalOrders").textContent = String(orders.length);
-
-        const total = orders.reduce((sum, order) => {
-          const value = Number(String(order.total ?? "0").replace(/[^0-9.-]/g, ""));
-          return sum + (Number.isFinite(value) ? value : 0);
-        }, 0);
-
-        document.getElementById("totalSpent").textContent =
-          "₹" + total.toLocaleString("en-IN", {
-            maximumFractionDigits: 2
-          });
-
-        ordersContainer.replaceChildren();
-
-        if (orders.length === 0) {
-          ordersContainer.appendChild(
-            stateBox(
-              "inventory_2",
-              "No orders yet",
-              "Your confirmed orders will appear here after you place an order.",
-              "Explore products",
-              () => window.location.href = "index.html#products"
-            )
-          );
-          return;
+        .tracking-title {
+        font-size: .78rem;
+        font-weight: 800;
+        color: var(--navy);
+        margin-bottom: 11px;
         }
 
-        orders.forEach(order => {
-          ordersContainer.appendChild(renderOrder(order));
-        });
+        .tracking-track {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 5px;
+        }
 
-      } catch (error) {
-        console.error("Could not load Firestore orders:", error);
+        .tracking-step {
+        text-align: center;
+        min-width: 0;
+        color: #9ca3af;
+        font-size: .67rem;
+        font-weight: 600;
+        }
 
-        if (auth.currentUser?.uid !== user.uid) return;
+        .tracking-dot {
+        width: 20px;
+        height: 20px;
+        margin: 0 auto 6px;
+        border-radius: 50%;
+        background: #e5e7eb;
+        color: #6b7280;
+        display: grid;
+        place-items: center;
+        font-size: .7rem;
+        }
+
+        .tracking-step.done {
+        color: var(--green);
+        }
+
+        .tracking-step.done .tracking-dot {
+        background: #dcfce7;
+        color: var(--green);
+        }
+
+        .tracking-step.current {
+        color: var(--orange-dark);
+        font-weight: 800;
+        }
+
+        .tracking-step.current .tracking-dot {
+        background: var(--orange);
+        color: white;
+        box-shadow: 0 0 0 4px #ffedd5;
+        }
+
+        .tracking-note {
+        margin: 10px 0 0;
+        font-size: .72rem;
+        color: var(--muted);
+        line-height: 1.45;
+        }
+
+        .state-box {
+        text-align: center;
+        padding: 38px 16px;
+        border: 1px dashed #f2d6c1;
+        background: #fffbf6;
+        border-radius: 17px;
+        }
+
+        .state-icon {
+        width: 54px;
+        height: 54px;
+        margin: 0 auto 12px;
+        display: grid;
+        place-items: center;
+        border-radius: 18px;
+        background: var(--orange-light);
+        color: var(--orange);
+        }
+
+        .state-box h3 {
+        margin: 0 0 7px;
+        font-size: 1rem;
+        color: var(--navy);
+        }
+
+        .state-box p {
+        margin: 0 auto 15px;
+        max-width: 300px;
+        color: var(--muted);
+        font-size: .85rem;
+        line-height: 1.5;
+        }
+
+        .footer-note {
+        text-align: center;
+        margin-top: 23px;
+        color: var(--muted);
+        font-size: .78rem;
+        }
+
+        #navbar {
+        display: none;
+        }
+
+        @media (max-width: 760px) {
+        body {
+            padding: 18px 14px 100px;
+        }
+
+        .dashboard {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-panel {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .profile-content {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .account-details {
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        .account-actions {
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .orders-panel {
+            padding: 18px;
+        }
+
+        #navbar {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            justify-content: space-around;
+            align-items: center;
+            padding: 9px 5px calc(9px + env(safe-area-inset-bottom));
+            background: #172033;
+            border-top: 1px solid #ffffff20;
+            box-shadow: 0 -5px 25px #17203320;
+        }
+
+        #navbar a {
+            color: #e5e7eb;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: 7px 12px;
+            border-radius: 13px;
+            font-size: .69rem;
+            font-weight: 700;
+        }
+
+        #navbar a .material-symbols-rounded {
+            font-size: 21px;
+        }
+
+        #navbar a.active {
+            color: white;
+            background: linear-gradient(135deg, #fb923c, #ea580c);
+        }
+        }
+
+        @media (max-width: 420px) {
+        .topbar {
+            align-items: flex-start;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+        }
+
+        .brand-name {
+            font-size: 1.15rem;
+        }
+
+        .home-btn {
+            padding: 9px;
+            font-size: .78rem;
+        }
+
+        .orders-heading {
+            align-items: center;
+        }
+
+        .orders-heading h2 {
+            font-size: 1.18rem;
+        }
+
+        .refresh-btn {
+            padding: 8px 9px;
+            font-size: .74rem;
+        }
+
+        .order-card {
+            padding: 13px;
+        }
+
+        .order-top {
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .order-bottom {
+            align-items: flex-end;
+        }
+
+        .tracking-step {
+            font-size: .6rem;
+        }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            scroll-behavior: auto !important;
+            transition: none !important;
+        }
+        }
+       /* Home button: desktop-il mathram visible */
+.home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 15px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: white;
+    color: var(--navy);
+    text-decoration: none;
+    font-size: .88rem;
+    font-weight: 700;
+    transition: .2s;
+}
+
+/* Mobile/tablet-il Home button hide cheyyuka */
+@media (max-width: 760px) {
+    .home-btn {
+        display: none !important;
+    }
+}
+    </style>
+    </head>
+
+    <body>
+    <main class="page">
+        <header class="topbar">
+        <div class="brand">
+            <img src="logo.png" class="brand-logo" alt="Chipso Foods logo">
+            <div>
+            <div class="brand-name">Chipso Foods</div>
+            <div class="brand-subtitle">Your account, your orders</div>
+            </div>
+        </div>
+
+        <a class="home-btn" href="index.html">
+            <span class="material-symbols-rounded">home</span>
+            Home
+        </a>
+        </header>
+
+        <section class="welcome">
+        <span class="eyebrow">
+            <span class="material-symbols-rounded">person_check</span>
+            My Account
+        </span>
+        <h1>Welcome back!</h1>
+        <p>Manage your account and keep track of your Chipso orders.</p>
+        </section>
+
+        <div class="dashboard">
+        <section class="panel profile-panel">
+            <div class="profile-cover"></div>
+
+            <div class="profile-content">
+            <div class="avatar-wrap">
+                <span id="defaultGuestIcon" class="material-symbols-rounded avatar-placeholder">account_circle</span>
+                <img id="userAvatarImg" src="" alt="Profile photo" style="display:none">
+            </div>
+
+            <h2 class="profile-name" id="userNameText">Loading profile...</h2>
+            <p class="profile-email" id="userEmailText">Checking account...</p>
+
+            <span class="account-badge" id="accountBadge">
+                <span class="material-symbols-rounded">sync</span>
+                Checking account
+            </span>
+
+            <div class="account-details">
+                <h3 class="section-mini-title">Account details</h3>
+
+                <div class="detail-row">
+                <div class="detail-icon">
+                    <span class="material-symbols-rounded">person</span>
+                </div>
+                <div class="detail-copy">
+                    <span class="detail-label">Full name</span>
+                    <span class="detail-value" id="detailName">Loading...</span>
+                </div>
+                </div>
+
+                <div class="detail-row">
+                <div class="detail-icon">
+                    <span class="material-symbols-rounded">mail</span>
+                </div>
+                <div class="detail-copy">
+                    <span class="detail-label">Email address</span>
+                    <span class="detail-value" id="detailEmail">Loading...</span>
+                </div>
+                </div>
+
+                <div class="detail-row">
+                <div class="detail-icon">
+                    <span class="material-symbols-rounded">verified_user</span>
+                </div>
+                <div class="detail-copy">
+                    <span class="detail-label">Sign-in provider</span>
+                    <span class="detail-value" id="detailProvider">Checking...</span>
+                </div>
+                </div>
+            </div>
+
+            <div class="account-actions">
+                <button class="btn btn-outline" id="refreshProfileBtn" type="button">
+                <span class="material-symbols-rounded">refresh</span>
+                Refresh orders
+                </button>
+
+                <button class="btn btn-danger" id="authBtn" type="button">
+                <span class="material-symbols-rounded">logout</span>
+                Logout
+                </button>
+            </div>
+            </div>
+        </section>
+
+        <section class="panel orders-panel">
+            <div class="orders-heading">
+            <div>
+                <h2>My Orders <span aria-hidden="true">📦</span></h2>
+                <p>Your order history and current status.</p>
+            </div>
+
+            <button class="btn btn-outline refresh-btn" id="refreshOrdersBtn" type="button">
+                <span class="material-symbols-rounded">refresh</span>
+                Refresh
+            </button>
+            </div>
+
+            <div class="order-summary">
+            <div class="summary-box">
+                <span class="summary-label">Total orders</span>
+                <strong class="summary-value" id="totalOrders">—</strong>
+            </div>
+
+            <div class="summary-box">
+                <span class="summary-label">Total order value</span>
+                <strong class="summary-value" id="totalSpent">—</strong>
+            </div>
+            </div>
+
+            <div class="orders-list" id="ordersContainer" aria-live="polite">
+            <div class="state-box">
+                <div class="state-icon">
+                <span class="material-symbols-rounded">hourglass_top</span>
+                </div>
+                <h3>Loading your orders</h3>
+                <p>Please wait while we retrieve your order history.</p>
+            </div>
+            </div>
+        </section>
+        </div>
+
+        <div class="footer-note">
+        Made with care by Chipso Foods 🧡
+        </div>
+    </main>
+
+    <nav id="navbar">
+        <a href="index.html" class="nav-link">🏠 <span>Home</span></a>
+        <a href="index.html#products" class="nav-link">📦 <span>Products</span></a>
+        <a href="index.html#contact" class="nav-link">📞 <span>Contact</span></a>
+        <a href="cart.html" class="nav-link active-jelly">🛒 <span>Cart</span></a>
+    </nav>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+        import {
+        getAuth,
+        onAuthStateChanged,
+        signOut
+        } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+        import {
+        getFirestore,
+        collection,
+        getDocs,
+        query,
+        orderBy
+        } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+        apiKey: "AIzaSyAh10EubxsLMReDKIMDE-tBTmZVQUFlfaM",
+        authDomain: "chipso-foods.firebaseapp.com",
+        projectId: "chipso-foods",
+        storageBucket: "chipso-foods.firebasestorage.app",
+        messagingSenderId: "857491576073",
+        appId: "1:857491576073:web:b35588a84db1d011936fd8",
+        measurementId: "G-HEMT0BJ3TK"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const ordersContainer = document.getElementById("ordersContainer");
+        const authBtn = document.getElementById("authBtn");
+        const refreshOrdersBtn = document.getElementById("refreshOrdersBtn");
+        const refreshProfileBtn = document.getElementById("refreshProfileBtn");
+
+        let activeUser = null;
+        let loadingOrders = false;
+        let authReady = false;
+
+        function stateBox(icon, title, message, actionLabel, action) {
+        const box = document.createElement("div");
+        box.className = "state-box";
+
+        const iconWrap = document.createElement("div");
+        iconWrap.className = "state-icon";
+
+        const iconElement = document.createElement("span");
+        iconElement.className = "material-symbols-rounded";
+        iconElement.textContent = icon;
+        iconWrap.appendChild(iconElement);
+
+        const heading = document.createElement("h3");
+        heading.textContent = title;
+
+        const paragraph = document.createElement("p");
+        paragraph.textContent = message;
+
+        box.append(iconWrap, heading, paragraph);
+
+        if (actionLabel && action) {
+            const button = document.createElement("button");
+            button.className = "btn btn-primary";
+            button.type = "button";
+            button.textContent = actionLabel;
+            button.addEventListener("click", action);
+            box.appendChild(button);
+        }
+
+        return box;
+        }
+
+        function setButtonLoading(button, loading, label) {
+        button.disabled = loading;
+        button.setAttribute("aria-busy", String(loading));
+
+        if (loading) {
+            button.dataset.originalText = button.textContent.trim();
+            button.textContent = label;
+        } else {
+            button.textContent = button.dataset.originalText || label;
+        }
+        }
+
+        function showGuestProfile() {
+        document.getElementById("userNameText").textContent = "Guest User";
+        document.getElementById("userEmailText").textContent = "Not logged in";
+        document.getElementById("detailName").textContent = "—";
+        document.getElementById("detailEmail").textContent = "—";
+        document.getElementById("detailProvider").textContent = "—";
+
+        document.getElementById("userAvatarImg").style.display = "none";
+        document.getElementById("defaultGuestIcon").style.display = "block";
+
+        const badge = document.getElementById("accountBadge");
+        badge.replaceChildren();
+
+        const badgeIcon = document.createElement("span");
+        badgeIcon.className = "material-symbols-rounded";
+        badgeIcon.textContent = "person";
+        badge.append(badgeIcon, document.createTextNode("Guest"));
+
+        authBtn.replaceChildren();
+        const loginIcon = document.createElement("span");
+        loginIcon.className = "material-symbols-rounded";
+        loginIcon.textContent = "login";
+        authBtn.append(loginIcon, document.createTextNode("Login"));
+
+        document.getElementById("totalOrders").textContent = "0";
+        document.getElementById("totalSpent").textContent = "₹0";
 
         ordersContainer.replaceChildren();
         ordersContainer.appendChild(
-          stateBox(
-            "cloud_off",
-            "Couldn't load orders",
-            "Check your internet connection and try refreshing. If this continues, check your Firestore rules.",
-            "Try again",
-            () => loadUserOrders()
-          )
+            stateBox(
+            "lock",
+            "Login to view your orders",
+            "Sign in to your Chipso account to access your personal order history.",
+            "Go to Login",
+            () => window.location.href = "m.html"
+            )
         );
 
-      } finally {
-        loadingOrders = false;
+        refreshOrdersBtn.disabled = true;
+        refreshProfileBtn.disabled = true;
+        }
 
-        setButtonLoading(refreshOrdersBtn, false, "Refresh");
-        setButtonLoading(refreshProfileBtn, false, "Refresh orders");
+        function showLoggedInProfile(user) {
+        const name = user.displayName || user.email?.split("@")[0] || "Chipso User";
+
+        document.getElementById("userNameText").textContent = name;
+        document.getElementById("userEmailText").textContent = user.email || "Email unavailable";
+        document.getElementById("detailName").textContent = name;
+        document.getElementById("detailEmail").textContent = user.email || "—";
+
+        const provider = user.providerData?.map(item => item.providerId) || [];
+        let providerText = "Firebase account";
+
+        if (provider.includes("google.com")) {
+            providerText = "Google";
+        } else if (provider.includes("password")) {
+            providerText = "Email & Password";
+        } else if (provider.length) {
+            providerText = provider.join(", ");
+        }
+
+        document.getElementById("detailProvider").textContent = providerText;
+
+        const avatar = document.getElementById("userAvatarImg");
+        const placeholder = document.getElementById("defaultGuestIcon");
+
+        if (user.photoURL) {
+            avatar.src = user.photoURL;
+            avatar.style.display = "block";
+            placeholder.style.display = "none";
+        } else {
+            avatar.removeAttribute("src");
+            avatar.style.display = "none";
+            placeholder.style.display = "block";
+        }
+
+        const badge = document.getElementById("accountBadge");
+        badge.replaceChildren();
+
+        const checkIcon = document.createElement("span");
+        checkIcon.className = "material-symbols-rounded";
+        checkIcon.textContent = "verified";
+        badge.append(checkIcon, document.createTextNode("Signed in"));
+
+        refreshOrdersBtn.disabled = false;
+        refreshProfileBtn.disabled = false;
+
+        authBtn.replaceChildren();
+        const logoutIcon = document.createElement("span");
+        logoutIcon.className = "material-symbols-rounded";
+        logoutIcon.textContent = "logout";
+        authBtn.append(logoutIcon, document.createTextNode("Logout"));
+        }
+
+        function getStatusInfo(statusValue) {
+        const status = String(statusValue || "Order Confirmed").trim();
+        const normal = status.toLowerCase();
+
+        if (normal.includes("cancel")) {
+            return { label: status, kind: "cancelled", stage: -1 };
+        }
+
+        if (normal.includes("deliver")) {
+            return { label: status, kind: "delivered", stage: 3 };
+        }
+
+        if (normal.includes("out for delivery")) {
+            return { label: status, kind: "normal", stage: 2 };
+        }
+
+        if (normal.includes("ship") || normal.includes("dispatch")) {
+            return { label: status, kind: "normal", stage: 2 };
+        }
+
+        if (normal.includes("process") || normal.includes("prepar")) {
+            return { label: status, kind: "normal", stage: 1 };
+        }
+
+        return { label: status, kind: "normal", stage: 0 };
+        }
+
+        function makeTracking(statusInfo) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "tracking";
+
+        const title = document.createElement("div");
+        title.className = "tracking-title";
+        title.textContent = statusInfo.kind === "cancelled"
+            ? "Order status"
+            : "Order progress";
+
+        wrapper.appendChild(title);
+
+        if (statusInfo.kind === "cancelled") {
+            const note = document.createElement("p");
+            note.className = "tracking-note";
+            note.textContent = "This order is marked as cancelled.";
+            wrapper.appendChild(note);
+            return wrapper;
+        }
+
+        const steps = [
+            { label: "Placed", icon: "check" },
+            { label: "Processing", icon: "inventory_2" },
+            { label: "On the way", icon: "local_shipping" },
+            { label: "Delivered", icon: "done_all" }
+        ];
+
+        const track = document.createElement("div");
+        track.className = "tracking-track";
+
+        steps.forEach((step, index) => {
+            const item = document.createElement("div");
+            item.className = "tracking-step";
+
+            if (index < statusInfo.stage) {
+            item.classList.add("done");
+            } else if (index === statusInfo.stage) {
+            item.classList.add("current");
+            }
+
+            const dot = document.createElement("div");
+            dot.className = "tracking-dot";
+            dot.textContent = index < statusInfo.stage ? "✓" : String(index + 1);
+
+            const label = document.createElement("div");
+            label.textContent = step.label;
+
+            item.append(dot, label);
+            track.appendChild(item);
+        });
+
+        wrapper.appendChild(track);
+
+        const note = document.createElement("p");
+        note.className = "tracking-note";
+        note.textContent =
+            "Progress is estimated from the saved order status. Live courier tracking is not connected.";
+        wrapper.appendChild(note);
+
+        return wrapper;
+        }
+
+        function renderOrder(order) {
+        const card = document.createElement("article");
+        card.className = "order-card";
+
+        const top = document.createElement("div");
+        top.className = "order-top";
+
+        const identity = document.createElement("div");
+
+        const id = document.createElement("div");
+        id.className = "order-id";
+        id.textContent = order.orderId || "CHIPSO-ORDER";
+
+        const date = document.createElement("div");
+        date.className = "order-date";
+        date.textContent = order.date || "Date unavailable";
+
+        identity.append(id, date);
+
+        const statusInfo = getStatusInfo(order.status);
+        const pill = document.createElement("span");
+        pill.className = "status-pill";
+
+        if (statusInfo.kind === "delivered") {
+            pill.classList.add("delivered");
+        } else if (statusInfo.kind === "cancelled") {
+            pill.classList.add("cancelled");
+        }
+
+        pill.textContent = statusInfo.label;
+
+        top.append(identity, pill);
+        card.appendChild(top);
+
+        const products = document.createElement("div");
+        products.className = "order-products";
+
+        const productsTitle = document.createElement("div");
+        productsTitle.className = "order-products-title";
+        productsTitle.textContent = "Items in your order";
+
+        const productsText = document.createElement("p");
+        productsText.className = "order-products-text";
+        productsText.textContent = order.products || "Product details unavailable";
+
+        products.append(productsTitle, productsText);
+        card.appendChild(products);
+
+        const bottom = document.createElement("div");
+        bottom.className = "order-bottom";
+
+        const totalGroup = document.createElement("div");
+
+        const totalLabel = document.createElement("span");
+        totalLabel.className = "total-label";
+        totalLabel.textContent = "Order total";
+
+        const totalValue = document.createElement("span");
+        totalValue.className = "total-value";
+        totalValue.textContent = "₹" + (order.total ?? "0");
+
+        totalGroup.append(totalLabel, totalValue);
+        bottom.appendChild(totalGroup);
+        card.appendChild(bottom);
+
+        card.appendChild(makeTracking(statusInfo));
+
+        return card;
+        }
+
+        async function loadUserOrders() {
+        const user = auth.currentUser;
+
+        if (!user) {
+            showGuestProfile();
+            return;
+        }
+
+        if (loadingOrders) return;
+
+        loadingOrders = true;
+        setButtonLoading(refreshOrdersBtn, true, "Loading...");
+        setButtonLoading(refreshProfileBtn, true, "Loading...");
+
+        ordersContainer.replaceChildren();
+        ordersContainer.appendChild(
+            stateBox(
+            "hourglass_top",
+            "Loading your orders",
+            "Please wait while we retrieve your order history."
+            )
+        );
+
+        try {
+            const ordersRef = collection(db, "users", user.uid, "orders");
+            const ordersQuery = query(ordersRef, orderBy("createdAt", "desc"));
+            const snapshot = await getDocs(ordersQuery);
+
+            // Do not show one user's data after an account switch.
+            if (auth.currentUser?.uid !== user.uid) return;
+
+            const orders = snapshot.docs.map(orderDoc => ({
+            ...orderDoc.data(),
+            _documentId: orderDoc.id
+            }));
+
+            document.getElementById("totalOrders").textContent = String(orders.length);
+
+            const total = orders.reduce((sum, order) => {
+            const value = Number(String(order.total ?? "0").replace(/[^0-9.-]/g, ""));
+            return sum + (Number.isFinite(value) ? value : 0);
+            }, 0);
+
+            document.getElementById("totalSpent").textContent =
+            "₹" + total.toLocaleString("en-IN", {
+                maximumFractionDigits: 2
+            });
+
+            ordersContainer.replaceChildren();
+
+            if (orders.length === 0) {
+            ordersContainer.appendChild(
+                stateBox(
+                "inventory_2",
+                "No orders yet",
+                "Your confirmed orders will appear here after you place an order.",
+                "Explore products",
+                () => window.location.href = "index.html#products"
+                )
+            );
+            return;
+            }
+
+            orders.forEach(order => {
+            ordersContainer.appendChild(renderOrder(order));
+            });
+
+        } catch (error) {
+            console.error("Could not load Firestore orders:", error);
+
+            if (auth.currentUser?.uid !== user.uid) return;
+
+            ordersContainer.replaceChildren();
+            ordersContainer.appendChild(
+            stateBox(
+                "cloud_off",
+                "Couldn't load orders",
+                "Check your internet connection and try refreshing. If this continues, check your Firestore rules.",
+                "Try again",
+                () => loadUserOrders()
+            )
+            );
+
+        } finally {
+            loadingOrders = false;
+
+            setButtonLoading(refreshOrdersBtn, false, "Refresh");
+            setButtonLoading(refreshProfileBtn, false, "Refresh orders");
+
+            if (!auth.currentUser) {
+            refreshOrdersBtn.disabled = true;
+            refreshProfileBtn.disabled = true;
+            }
+        }
+        }
+
+        onAuthStateChanged(auth, user => {
+        authReady = true;
+        activeUser = user;
+
+        if (user) {
+            showLoggedInProfile(user);
+            loadUserOrders();
+        } else {
+            showGuestProfile();
+        }
+        });
+
+        refreshOrdersBtn.addEventListener("click", () => {
+        if (authReady && activeUser) loadUserOrders();
+        });
+
+        refreshProfileBtn.addEventListener("click", () => {
+        if (authReady && activeUser) loadUserOrders();
+        });
+
+        authBtn.addEventListener("click", async () => {
+        if (!authReady) return;
 
         if (!auth.currentUser) {
-          refreshOrdersBtn.disabled = true;
-          refreshProfileBtn.disabled = true;
+            window.location.href = "m.html";
+            return;
         }
-      }
-    }
 
-    onAuthStateChanged(auth, user => {
-      authReady = true;
-      activeUser = user;
+        const confirmed = window.confirm(
+            "Chipso Foods-il ninn logout cheyyano?"
+        );
 
-      if (user) {
-        showLoggedInProfile(user);
-        loadUserOrders();
-      } else {
-        showGuestProfile();
-      }
-    });
+        if (!confirmed) return;
 
-    refreshOrdersBtn.addEventListener("click", () => {
-      if (authReady && activeUser) loadUserOrders();
-    });
+        authBtn.disabled = true;
+        authBtn.textContent = "Logging out...";
 
-    refreshProfileBtn.addEventListener("click", () => {
-      if (authReady && activeUser) loadUserOrders();
-    });
+        try {
+            await signOut(auth);
+            localStorage.removeItem("googleUserSignedIn");
+            sessionStorage.removeItem("chipsoPendingOrder");
+            window.location.href = "index.html";
+        } catch (error) {
+            console.error("Logout failed:", error);
+            alert("Logout cheyyan kazhinjilla. Veendum try cheyyuka.");
 
-    authBtn.addEventListener("click", async () => {
-      if (!authReady) return;
+            authBtn.disabled = false;
+            authBtn.replaceChildren();
 
-      if (!auth.currentUser) {
-        window.location.href = "m.html";
-        return;
-      }
+            const icon = document.createElement("span");
+            icon.className = "material-symbols-rounded";
+            icon.textContent = "logout";
+            authBtn.append(icon, document.createTextNode("Logout"));
+        }
+        });
 
-      const confirmed = window.confirm(
-        "Chipso Foods-il ninn logout cheyyano?"
-      );
+        // Highlight the Home item in mobile navigation.
+        const currentPage = window.location.pathname.split("/").pop();
+        document.querySelectorAll("#navbar a").forEach(link => {
+        if (link.getAttribute("href") === currentPage) {
+            link.classList.add("active");
+        }
+        });
+    </script>
+    </body>
+    </html>
 
-      if (!confirmed) return;
-
-      authBtn.disabled = true;
-      authBtn.textContent = "Logging out...";
-
-      try {
-        await signOut(auth);
-        localStorage.removeItem("googleUserSignedIn");
-        sessionStorage.removeItem("chipsoPendingOrder");
-        window.location.href = "index.html";
-      } catch (error) {
-        console.error("Logout failed:", error);
-        alert("Logout cheyyan kazhinjilla. Veendum try cheyyuka.");
-
-        authBtn.disabled = false;
-        authBtn.replaceChildren();
-
-        const icon = document.createElement("span");
-        icon.className = "material-symbols-rounded";
-        icon.textContent = "logout";
-        authBtn.append(icon, document.createTextNode("Logout"));
-      }
-    });
-
-    // Highlight the Home item in mobile navigation.
-    const currentPage = window.location.pathname.split("/").pop();
-    document.querySelectorAll("#navbar a").forEach(link => {
-      if (link.getAttribute("href") === currentPage) {
-        link.classList.add("active");
-      }
-    });
-  </script>
-</body>
-</html>
